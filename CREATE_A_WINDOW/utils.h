@@ -8,6 +8,7 @@
 
 namespace utils {
 	std::string readFileIntoString(const char*);
+	int test();
 }
 
 #endif

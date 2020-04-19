@@ -10,4 +10,12 @@ namespace utils
 			std::istreambuf_iterator<char>());
 		return str;
 	}
+
+	int test()
+	{
+		std::string str;
+		str = utils::readFileIntoString("vertexShader.txt");
+		std::cout << str << std::endl;
+		return 0;
+	}
 }
