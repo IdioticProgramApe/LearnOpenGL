@@ -11,4 +11,4 @@ namespace utils {
 	int test();
 }
 
-#endif
+#endif // !UTILS_H
