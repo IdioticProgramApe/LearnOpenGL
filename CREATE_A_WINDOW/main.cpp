@@ -117,7 +117,6 @@ int main()
 	// 3. copy the index array in a element buffer for OPENGL to use
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
 	// 4. then set our vertex attributes pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -133,7 +132,7 @@ int main()
 		processInput(window);
 
 		// .. :: Drawing code :: ..
-		// 4. draw the object
+		// 5. draw the object
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
 		// glDrawArrays(GL_TRIANGLES, 0, 3);
