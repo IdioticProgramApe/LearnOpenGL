@@ -1,18 +1,24 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <string>
-#include <fstream>
-#include <sstream>
 #include <iostream>
 
-const char* readFileIntoString(const char*);
+#include "utils.h"
+
+
 void framebuffer_size_callback(GLFWwindow*, int, int);
 void processInput(GLFWwindow*);
+// vertex coords
 float vertices[] = {
-	-0.5f, -0.5f, 0.0f,
+	 0.5f,  0.5f, 0.0f,
 	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+	-0.5f, -0.5f, 0.0f,
+	-0.5f,  0.5f, 0.0f
+};
+// face connectivity
+unsigned int indices[] = {
+	0, 1, 3,
+	1, 2, 3
 };
 const char* vertexShaderSource = "#version 330 core\n layout (location = 0) in vec3 aPos;void main(){gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);}";
 const char* fragmentShaderSource = "#version 330 core\n out vec4 FragColor;void main(){FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);}";
@@ -51,9 +57,16 @@ int main()
 	// generate a buffer ID for VBO: vertex buffer objects
 	unsigned int VBO;
 	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	// advanced, generate a EBO: element buffer objects
+	unsigned int EBO;
+	glGenBuffers(1, &EBO);
+
+	// generate a VAO to store all status for a drawing: vertex array objects
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+
+	// setup shader program: vertex, fragment, program
 	// compile a veretx shader
 	unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -91,10 +104,23 @@ int main()
 		std::cout << "ERROR::SHADER::PROGRAM::LINK_FAILED\n"
 			<< infoLog << std::endl;
 	}
-	glUseProgram(shaderProgram);
 	// the deletion can be done after the link
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
+	// .. :: Initialization code (done once (unless the object frequently change)) :: ..
+	// 1. bind Vertex Array Object
+	glBindVertexArray(VAO);
+	// 2. copy the vertices array in a vertex buffer for OPENGL to use
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	// 3. copy the index array in a element buffer for OPENGL to use
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	// 4. then set our vertex attributes pointers
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 	// rendering loop
 	while (!glfwWindowShouldClose(window))
@@ -106,8 +132,13 @@ int main()
 		// input
 		processInput(window);
 
-		// rendering commands here
-
+		// .. :: Drawing code :: ..
+		// 4. draw the object
+		glUseProgram(shaderProgram);
+		glBindVertexArray(VAO);
+		// glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);  // unbind
 
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);
@@ -116,18 +147,6 @@ int main()
 	glfwTerminate();
 
 	return 0;
-}
-
-// try to use file reading to replace the direct assignment
-const char* readFileIntoString(const char* filename)
-{
-	std::ifstream ifile(filename);
-	std::ostringstream buf;
-	char ch;
-	
-	while (buf&&ifile.get(ch))
-		buf.put(ch);
-	return const_cast<const char*>(buf.str().c_str());
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -141,4 +160,11 @@ void processInput(GLFWwindow* window)
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
+}
+
+void test_read()
+{
+	std::string str;
+	str = utils::readFileIntoString("vertexShader.txt");
+	std::cout << str << std::endl;
 }
