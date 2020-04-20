@@ -73,12 +73,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\glad.c" />
+    <ClCompile Include="exercise.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="tuto.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="constants.h" />
+    <ClInclude Include="exercises.h" />
     <ClInclude Include="tuto.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
