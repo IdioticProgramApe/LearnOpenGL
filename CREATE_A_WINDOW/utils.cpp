@@ -55,7 +55,7 @@ namespace utils
 		std::string str;
 		str = utils::readFileIntoString("vertexShader.txt");
 		std::cout << str << std::endl;
-		printf(str.c_str());
+		printf(str.c_str(), "\n");
 		return 0;
 	}
 }

@@ -11,4 +11,3 @@ namespace tuto
 	int test();
 }
 #endif // !TUTO_H
-
