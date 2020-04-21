@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CREATE_A_WINDOW", "CREATE_A_WINDOW\CREATE_A_WINDOW.vcxproj", "{BDAB9009-BBB1-4628-838F-D369FC9272A9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SHADERS", "SHADERS\SHADERS.vcxproj", "{9B76A075-61D6-441F-8D42-C0248BC2A0C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -15,6 +17,10 @@ Global
 		{BDAB9009-BBB1-4628-838F-D369FC9272A9}.Debug|x64.Build.0 = Debug|x64
 		{BDAB9009-BBB1-4628-838F-D369FC9272A9}.Release|x64.ActiveCfg = Release|x64
 		{BDAB9009-BBB1-4628-838F-D369FC9272A9}.Release|x64.Build.0 = Release|x64
+		{9B76A075-61D6-441F-8D42-C0248BC2A0C4}.Debug|x64.ActiveCfg = Debug|x64
+		{9B76A075-61D6-441F-8D42-C0248BC2A0C4}.Debug|x64.Build.0 = Debug|x64
+		{9B76A075-61D6-441F-8D42-C0248BC2A0C4}.Release|x64.ActiveCfg = Release|x64
+		{9B76A075-61D6-441F-8D42-C0248BC2A0C4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
