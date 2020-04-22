@@ -1,8 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-
 #include "shaderSource.h"
 #include "tuto.h"
 #include "utils.h"
@@ -26,14 +24,12 @@ int tuto::colorAttrib()
 
 	GLFWwindow* window = glfwCreateWindow(800, 600, "tuto2-color attributes", NULL, NULL);
 	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, utils::frameBufferSizeCallback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		return -1;
 	}
-
-	glViewport(0, 0, 800, 600);
-	glfwSetFramebufferSizeCallback(window, utils::frameBufferSizeCallback);
 
 	unsigned int vertexShader, fragmentShader, shaderProgram;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -42,11 +38,17 @@ int tuto::colorAttrib()
 
 	glShaderSource(vertexShader, 1, &ShaderSource::vertexWithColor, NULL);
 	glCompileShader(vertexShader);
+	utils::checkShaderCompilation(vertexShader);
+
 	glShaderSource(fragmentShader, 1, &ShaderSource::fragmentWithColor, NULL);
 	glCompileShader(fragmentShader);
+	utils::checkShaderCompilation(fragmentShader);
+
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
+	utils::checkProgramLink(shaderProgram);
+
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 

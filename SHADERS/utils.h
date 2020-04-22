@@ -8,6 +8,8 @@ namespace utils
 {
 	void frameBufferSizeCallback(GLFWwindow*, int, int);
 	void processInputs(GLFWwindow*);
+	void checkShaderCompilation(GLuint);
+	void checkProgramLink(GLuint);
 }
 
 #endif // !UTILS_H
