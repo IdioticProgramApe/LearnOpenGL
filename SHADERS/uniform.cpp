@@ -5,23 +5,24 @@
 
 #include "shaderSource.h"
 #include "utils.h"
+#include "tuto.h"
 
 
 // vertex coords
-float vertices[] = {
+float verticesUniform[] = {
 	 0.5f,  0.5f, 0.0f,
 	 0.5f, -0.5f, 0.0f,
 	-0.5f, -0.5f, 0.0f,
 	-0.5f,  0.5f, 0.0f
 };
 // face connectivity
-unsigned int indices[] = {
+unsigned int indicesUniform[] = {
 	0, 1, 3,
 	1, 2, 3
 };
 
 
-int main()
+int tuto::uniform()
 {
 	glfwInit();
 
@@ -66,9 +67,9 @@ int main()
 
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesUniform), verticesUniform, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicesUniform), indicesUniform, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
@@ -80,7 +81,7 @@ int main()
 
 		utils::processInputs(window);
 
-		float timeValue = glfwGetTime();
+		float timeValue = static_cast<float>(glfwGetTime());
 		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
 
