@@ -1,36 +1,14 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "utils.h"
 
-#include <iostream>
-
-
-
-
-int main()
+void utils::frameBufferSizeCallback(GLFWwindow* window, int width, int height)
 {
-	glfwInit();
+	glViewport(0, 0, width, height);
+}
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "shaders", NULL, NULL);
-	glfwMakeContextCurrent(window);
-
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+void utils::processInputs(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
-		return -1;
+		glfwSetWindowShouldClose(window, true);
 	}
-
-	glViewport(0, 0, 800, 600);
-
-	int nrAttributes;
-	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-	std::cout << "Maximum nr of vertex attributes supported: "
-		<< nrAttributes << std::endl;
-
-	while (!glfwWindowShouldClose(window))
-	{
-		glfwPollEvents();
-		glfwSwapBuffers(window);
-	}
-	glfwTerminate();
-
-	return 0;
 }
