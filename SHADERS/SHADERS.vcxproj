@@ -70,11 +70,13 @@
   <ItemGroup>
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="colorAttrib.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="uniform.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="shaderSource.h" />
     <ClInclude Include="tuto.h" />
     <ClInclude Include="utils.h" />
