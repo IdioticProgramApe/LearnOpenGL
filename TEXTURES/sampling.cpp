@@ -53,9 +53,14 @@ int main()
 	// set texture warpping method
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-	// set texture filtering method
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	// set texture filtering method (with and without mipmap)
+	// mipmap only used for downsize, used in maginfying will throw GL_INVALID_ENUM error
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// to generate mipmaps: glGenerateMipmap
+
 
 	// if use GL_CLAMP_TO_BORDER, need to specify border color
 	// float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
