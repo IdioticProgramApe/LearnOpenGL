@@ -61,6 +61,18 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// to generate mipmaps: glGenerateMipmap
+	// load texture image from a location and store width and height info
+	// width and height will be used for later
+	int width, height, nrChannels;
+	unsigned char* data = stbi_load(TEX_CONTAINER, &width, &height, &nrChannels, 0);
+
+	// create texture
+	unsigned int texture;
+	glGenTextures(1, &texture);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
 
 
 	// if use GL_CLAMP_TO_BORDER, need to specify border color
