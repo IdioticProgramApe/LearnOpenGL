@@ -10,5 +10,5 @@ uniform float ratio;
 
 void main()
 {
-    FragColor = mix(texture(ourTexture0, TexCoord), texture(ourTexture1, TexCoord), ratio);
+    FragColor = mix(texture(ourTexture0, TexCoord), texture(ourTexture1, vec2(TexCoord.x, 1.0 - TexCoord.y)), ratio);
 }

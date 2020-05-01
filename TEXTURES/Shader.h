@@ -14,6 +14,9 @@ public:
 	unsigned int shaderProgram;
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
 	void use();
+	void setInt(const std::string &name, int value);
+	void setFloat(const std::string &name, float value);
+	void changeFloat(const std::string &name, float value);
 	~Shader();
 };
 
