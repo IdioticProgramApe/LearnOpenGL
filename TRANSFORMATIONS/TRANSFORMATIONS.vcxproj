@@ -72,9 +72,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="transforms.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\glad.c" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="transforms.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
