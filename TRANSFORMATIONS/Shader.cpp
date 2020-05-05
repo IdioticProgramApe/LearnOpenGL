@@ -94,6 +94,12 @@ void Shader::setFloat(const GLchar* name, GLfloat value)
 	glUniform1f(location, value);
 }
 
+void Shader::setMat4(const GLchar* name, glm::mat4 trans)
+{
+	GLint location = glGetUniformLocation(this->shaderProgram, name);
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(trans));
+}
+
 Shader::~Shader()
 {
 }
