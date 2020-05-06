@@ -1,6 +1,6 @@
 # Readme
 
-sources: 
+Sources: 
 - TUTO: https://learnopengl.com/
 - GLFW: https://www.glfw.org/download.html
 - GLAD: https://glad.dav1d.de/

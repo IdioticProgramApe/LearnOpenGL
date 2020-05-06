@@ -4,7 +4,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 #define WINDOW_TITLE "TRANSFORMATIONS"
-#define EXO false
+#define EXO true
 
 typedef glm::vec3 VEC3;
 typedef glm::mat4 MAT4;
@@ -150,14 +150,17 @@ int main()
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		
+		glBindTexture(GL_TEXTURE_2D, 0);
 #if EXO
 		MAT4 tmpTrans(1.0f);
 		tmpTrans = glm::translate(tmpTrans, VEC3(-0.5f, 0.5f, 0.0f));
 		tmpTrans = glm::scale(tmpTrans, VEC3(sin((float)glfwGetTime()), sin((float)glfwGetTime()), 1.0f));
 		shader.setMat4("transform", tmpTrans);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, texture0);
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 #endif
 
 		glfwSwapBuffers(window);
