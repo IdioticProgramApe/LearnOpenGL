@@ -14,7 +14,6 @@ constexpr const char* FRAGMENT_SHADER_PATH = "./shaders/shader.fs";
 
 void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height);
 void processInput(GLFWwindow* window);
-MAT4 generateTransform();
 
 int main()
 {
@@ -129,15 +128,30 @@ int main()
 	}
 	stbi_image_free(data);
 
+	// setting coords transform matrices
+	// don't forget to initialize the MAT4 matrices with a Identity Matrix
+	MAT4 model(1.0f);
+	model = glm::rotate(model, glm::radians(-55.0f), VEC3(1.0f, 0.0f, 0.0f));
+
+	MAT4 view(1.0f);
+	view = glm::translate(view, VEC3(0.0f, 0.0f, -3.0f));
+
+	MAT4 projection(1.0f);
+	projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+
 	shader.use();
 	shader.setInt("ourTexture0", 0);
 	shader.setInt("ourTexture1", 1);
 	shader.setFloat("ratio", 0.2f);
+	shader.setMat4("model", model);
+	shader.setMat4("view", view);
+	shader.setMat4("projection", projection);
 
+	// how to dynamically get viewport width and height ?
 	// create a orthographic projection matrix
-	MAT4 projOrtho = glm::ortho(0.0f, (float)WINDOW_WIDTH, 0.0f, (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+	// MAT4 projOrtho = glm::ortho(0.0f, (float)WINDOW_WIDTH, 0.0f, (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 	// create a perspective projection matrix
-	MAT4 projPersp = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.f);
+	// MAT4 projPersp = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.f);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -151,15 +165,14 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, texture0);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture1);
-		shader.setMat4("transform", generateTransform());
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteVertexArrays(1, &VAO);
@@ -182,23 +195,3 @@ void processInput(GLFWwindow* window)
 		glfwSetWindowShouldClose(window, true);
 	}
 }
-
-MAT4 generateTransform()
-{
-	float curValue = static_cast<float>(glfwGetTime());
-	// initialize a indentity matrix
-	MAT4 trans(1.0f);
-	// begin to prepare the transformation matrices
-	// 1. translation
-	trans = glm::translate(trans, VEC3(0.5f * cos(curValue), -0.5f * sin(curValue), 0.0f));
-	// 2. rotation
-	trans = glm::rotate(trans, 3.0f * (float)glfwGetTime(), VEC3(0.0f, 0.0f, 1.0f));
-	// 3. scaling
-	trans = glm::scale(trans, VEC3(sin(curValue), cos(curValue), 1.0f));
-	return trans;
-}
-
-// for The First Exercise in the TRANSFORMATIONS tuto
-// switching the order around by first rotating and second translating
-// we will have no impact on the ratation but the translation is not what we expected
-// the reason is the translate vector is under the influence of the rotation as well.
