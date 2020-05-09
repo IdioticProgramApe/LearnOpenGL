@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TRANSFORMATIONS", "TRANSFOR
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COORDINATE_SYSTEMS", "COORDINATE_SYSTEMS\COORDINATE_SYSTEMS.vcxproj", "{20C18AA1-500F-4601-A529-89D83BFB2318}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CAMERA", "CAMERA\CAMERA.vcxproj", "{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,6 +41,10 @@ Global
 		{20C18AA1-500F-4601-A529-89D83BFB2318}.Debug|x64.Build.0 = Debug|x64
 		{20C18AA1-500F-4601-A529-89D83BFB2318}.Release|x64.ActiveCfg = Release|x64
 		{20C18AA1-500F-4601-A529-89D83BFB2318}.Release|x64.Build.0 = Release|x64
+		{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}.Debug|x64.ActiveCfg = Debug|x64
+		{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}.Debug|x64.Build.0 = Debug|x64
+		{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}.Release|x64.ActiveCfg = Release|x64
+		{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
