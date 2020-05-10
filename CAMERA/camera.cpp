@@ -173,19 +173,6 @@ int main()
 	shader.setInt("ourTexture1", 1);
 	shader.setFloat("ratio", 0.2f);
 
-	// set camera view matrix
-	// 1. set the translate
-	VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
-
-	// 2. set 3 axis - z pos
-	VEC3 cameraTarget = VEC3(0.0f, 0.0f, 0.0f);
-	VEC3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-	// 2. set 3 axis - x pos
-	VEC3 up = VEC3(0.0f, 1.0f, 0.0f);
-	VEC3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-	// 2. set 3 axis - y pos
-	VEC3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -212,8 +199,29 @@ int main()
 			{
 				model = glm::rotate(model, (float)glfwGetTime() * glm::radians(20.0f * i), VEC3(1.0f, 0.3f, 0.5f));
 			}
-			view = glm::translate(view, VEC3(0.0f, 0.0f, -3.0f));
-			// view = glm::translate(view, VEC3(sin((float)glfwGetTime()) * 3, 0.0f, cos((float)glfwGetTime()) * 5));
+
+			//// set camera view matrix
+			//// 1. set the translate
+			//VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
+
+			// 2. set 3 axis - z pos
+			// VEC3 cameraTarget = VEC3(0.0f, 0.0f, 0.0f);
+			// VEC3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+			// 2. set 3 axis - x pos
+			// VEC3 up = VEC3(0.0f, 1.0f, 0.0f);
+			// VEC3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+			// 2. set 3 axis - y pos
+			// VEC3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+			// can use glm::mat4 to manually create a lookat
+			// however a more convenient way is:
+			// MAT4 view(1.0f);
+			// view = glm::lookAt(cameraPos, cameraTarget, up);
+
+			float camX = sin((float)glfwGetTime()) * 10.0f;
+			float camZ = cos((float)glfwGetTime()) * 10.0f;
+			view = glm::lookAt(VEC3(camX, 0.0f, camZ), VEC3(0.0f, 0.0f, 0.0f), VEC3(0.0f, 1.0f, 0.0f));
+
 			projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
 
 
