@@ -13,7 +13,7 @@ constexpr const char* FRAGMENT_SHADER_PATH = "./shaders/shader.fs";
 
 
 void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height);
-void processInput(GLFWwindow* window);
+void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp);
 
 int main()
 {
@@ -173,12 +173,17 @@ int main()
 	shader.setInt("ourTexture1", 1);
 	shader.setFloat("ratio", 0.2f);
 
+	// this view likes to walk straight
+	VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
+	VEC3 cameraFront = VEC3(0.0f, 0.0f, -1.0f);
+	VEC3 cameraUp = VEC3(0.0f, 1.0f, 0.0f);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		processInput(window);
+		processInput(window, cameraPos, cameraFront, cameraUp);
 
 		// use texture
 		glActiveTexture(GL_TEXTURE0);
@@ -202,7 +207,7 @@ int main()
 
 			//// set camera view matrix
 			//// 1. set the translate
-			//VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
+			// VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
 
 			// 2. set 3 axis - z pos
 			// VEC3 cameraTarget = VEC3(0.0f, 0.0f, 0.0f);
@@ -218,9 +223,12 @@ int main()
 			// MAT4 view(1.0f);
 			// view = glm::lookAt(cameraPos, cameraTarget, up);
 
-			float camX = sin((float)glfwGetTime()) * 10.0f;
-			float camZ = cos((float)glfwGetTime()) * 10.0f;
-			view = glm::lookAt(VEC3(camX, 0.0f, camZ), VEC3(0.0f, 0.0f, 0.0f), VEC3(0.0f, 1.0f, 0.0f));
+			// This view likes to dance circle
+			// float camX = sin((float)glfwGetTime()) * 10.0f;
+			// float camZ = cos((float)glfwGetTime()) * 10.0f;
+			// view = glm::lookAt(VEC3(camX, 0.0f, camZ), VEC3(0.0f, 0.0f, 0.0f), VEC3(0.0f, 1.0f, 0.0f));
+
+			view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 			projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
 
@@ -251,10 +259,27 @@ void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height)
 	glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp)
 {
+	float cameraSpeed = 0.05f;
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, true);
+	}
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		cameraPos += cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		cameraPos -= cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
 	}
 }
