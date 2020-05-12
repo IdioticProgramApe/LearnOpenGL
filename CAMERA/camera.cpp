@@ -14,7 +14,7 @@ constexpr const char* FRAGMENT_SHADER_PATH = "./shaders/shader.fs";
 
 void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height);
 void cursorPosCallback(GLFWwindow* window, double xpos, double ypos);
-void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp);
+void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp, const float deltaTime);
 
 int main()
 {
@@ -183,12 +183,18 @@ int main()
 	// wherever we movw the cursor, it won't be visible and it shouldn't leave the window
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+	float deltaTime(0.0f), lastFrame(0.0f);
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		processInput(window, cameraPos, cameraFront, cameraUp);
+		// get deltaTime
+		float currentFrame = (float)glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		processInput(window, cameraPos, cameraFront, cameraUp, deltaTime);
 
 		// use texture
 		glActiveTexture(GL_TEXTURE0);
@@ -233,6 +239,9 @@ int main()
 			// float camZ = cos((float)glfwGetTime()) * 10.0f;
 			// view = glm::lookAt(VEC3(camX, 0.0f, camZ), VEC3(0.0f, 0.0f, 0.0f), VEC3(0.0f, 1.0f, 0.0f));
 
+			// use Euler angles and mouse to control the cameraFront
+
+
 			view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 			projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
@@ -269,9 +278,9 @@ void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 
 }
 
-void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp)
+void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp, const float deltaTime)
 {
-	float cameraSpeed = 0.05f;
+	float cameraSpeed = 2.5f * deltaTime;  // convert the speed from m/s to m/frame
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, true);
