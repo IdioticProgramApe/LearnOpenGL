@@ -1,8 +1,8 @@
 #include "common.h"
+#include "camera.hpp"
 
-
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
 #define WINDOW_TITLE "CAMERA"
 
 typedef glm::vec3 VEC3;
@@ -17,16 +17,10 @@ void cursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
 
-// global variables, these variables are used in the callback function
-VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
-VEC3 cameraFront = VEC3(0.0f, 0.0f, -1.0f);
-VEC3 cameraUp = VEC3(0.0f, 1.0f, 0.0f);
-
 bool firstMouse(true);
 float deltaTime(0.0f), lastFrame(0.0f);
 float lastX((float)WINDOW_WIDTH / 2), lastY((float)WINDOW_HEIGHT / 2);
-float pitch(0.0f), yaw(0.0f);
-float fov(45.0f);
+Camera cam(VEC3(0.0f, 0.0f, 3.0f), VEC3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 
 int main()
 {
@@ -190,6 +184,7 @@ int main()
 
 	// wherever we movw the cursor, it won't be visible and it shouldn't leave the window
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -245,9 +240,8 @@ int main()
 			// float camZ = cos((float)glfwGetTime()) * 10.0f;
 			// view = glm::lookAt(VEC3(camX, 0.0f, camZ), VEC3(0.0f, 0.0f, 0.0f), VEC3(0.0f, 1.0f, 0.0f));
 
-			view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-			projection = glm::perspective(glm::radians(fov), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+			view = cam.getViewMatrix();
+			projection = glm::perspective(glm::radians(cam.Zoom), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
 
 
 			shader.setMat4("model", model);
@@ -289,55 +283,21 @@ void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 	float xoffset = xpos - lastX;
 	float yoffset = lastY - ypos;  // reversed since y-coordinates range from bottom to top
 
-	lastX = xpos;
-	lastY = ypos;
-
-	float sentisivity = 0.05f;
-	xoffset *= sentisivity;
-	yoffset *= sentisivity;
-
-	yaw += xoffset;
-	pitch += yoffset;
-
-	if (pitch > 89.0f) pitch = 89.0f;
-	if (pitch < -89.0f) pitch = -89.0f;
-	
-	// use Euler angles and mouse to control the cameraFront
-	VEC3 front;
-	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-	front.y = sin(glm::radians(pitch));
-	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-	cameraFront = glm::normalize(front);
+	cam.processMouseMovement(xoffset, yoffset, true);
 }
 
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	if (fov >= 1.0f && fov <= 45.0f) fov -= yoffset;
-	else if (fov < 1.0f) fov = 1.0f;
-	else fov = 45.0f;
+	cam.processMouseScroll(yoffset);
 }
 
 void processInput(GLFWwindow* window)
 {
-	float cameraSpeed = 2.5f * deltaTime;  // convert the speed from m/s to m/frame
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-	{
-		glfwSetWindowShouldClose(window, true);
-	}
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		cameraPos += cameraSpeed * cameraFront;
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		cameraPos -= cameraSpeed * cameraFront;
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
-	}
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+
+	// control the movement
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) cam.processKeyboard(FORWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) cam.processKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) cam.processKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) cam.processKeyboard(RIGHT, deltaTime);
 }
