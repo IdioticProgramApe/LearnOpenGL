@@ -14,7 +14,19 @@ constexpr const char* FRAGMENT_SHADER_PATH = "./shaders/shader.fs";
 
 void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height);
 void cursorPosCallback(GLFWwindow* window, double xpos, double ypos);
-void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp, const float deltaTime);
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+void processInput(GLFWwindow* window);
+
+// global variables, these variables are used in the callback function
+VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
+VEC3 cameraFront = VEC3(0.0f, 0.0f, -1.0f);
+VEC3 cameraUp = VEC3(0.0f, 1.0f, 0.0f);
+
+bool firstMouse(true);
+float deltaTime(0.0f), lastFrame(0.0f);
+float lastX((float)WINDOW_WIDTH / 2), lastY((float)WINDOW_HEIGHT / 2);
+float pitch(0.0f), yaw(0.0f);
+float fov(45.0f);
 
 int main()
 {
@@ -35,6 +47,7 @@ int main()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 	glfwSetCursorPosCallback(window, cursorPosCallback);
+	glfwSetScrollCallback(window, scrollCallback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -175,15 +188,8 @@ int main()
 	shader.setInt("ourTexture1", 1);
 	shader.setFloat("ratio", 0.2f);
 
-	// this view likes to walk straight
-	VEC3 cameraPos = VEC3(0.0f, 0.0f, 3.0f);
-	VEC3 cameraFront = VEC3(0.0f, 0.0f, -1.0f);
-	VEC3 cameraUp = VEC3(0.0f, 1.0f, 0.0f);
-
 	// wherever we movw the cursor, it won't be visible and it shouldn't leave the window
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-	float deltaTime(0.0f), lastFrame(0.0f);
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -194,7 +200,7 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		processInput(window, cameraPos, cameraFront, cameraUp, deltaTime);
+		processInput(window);
 
 		// use texture
 		glActiveTexture(GL_TEXTURE0);
@@ -239,12 +245,9 @@ int main()
 			// float camZ = cos((float)glfwGetTime()) * 10.0f;
 			// view = glm::lookAt(VEC3(camX, 0.0f, camZ), VEC3(0.0f, 0.0f, 0.0f), VEC3(0.0f, 1.0f, 0.0f));
 
-			// use Euler angles and mouse to control the cameraFront
-
-
 			view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-			projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+			projection = glm::perspective(glm::radians(fov), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
 
 
 			shader.setMat4("model", model);
@@ -275,10 +278,46 @@ void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height)
 
 void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 {
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
 
+	// get the velocity per frame
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;  // reversed since y-coordinates range from bottom to top
+
+	lastX = xpos;
+	lastY = ypos;
+
+	float sentisivity = 0.05f;
+	xoffset *= sentisivity;
+	yoffset *= sentisivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f) pitch = 89.0f;
+	if (pitch < -89.0f) pitch = -89.0f;
+	
+	// use Euler angles and mouse to control the cameraFront
+	VEC3 front;
+	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	front.y = sin(glm::radians(pitch));
+	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraFront = glm::normalize(front);
 }
 
-void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp, const float deltaTime)
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	if (fov >= 1.0f && fov <= 45.0f) fov -= yoffset;
+	else if (fov < 1.0f) fov = 1.0f;
+	else fov = 45.0f;
+}
+
+void processInput(GLFWwindow* window)
 {
 	float cameraSpeed = 2.5f * deltaTime;  // convert the speed from m/s to m/frame
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
