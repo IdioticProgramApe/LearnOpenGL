@@ -13,6 +13,7 @@ constexpr const char* FRAGMENT_SHADER_PATH = "./shaders/shader.fs";
 
 
 void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height);
+void cursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp);
 
 int main()
@@ -33,6 +34,7 @@ int main()
 
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+	glfwSetCursorPosCallback(window, cursorPosCallback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -178,6 +180,9 @@ int main()
 	VEC3 cameraFront = VEC3(0.0f, 0.0f, -1.0f);
 	VEC3 cameraUp = VEC3(0.0f, 1.0f, 0.0f);
 
+	// wherever we movw the cursor, it won't be visible and it shouldn't leave the window
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -257,6 +262,11 @@ int main()
 void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height)
 {
 	glViewport(0, 0, width, height);
+}
+
+void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+
 }
 
 void processInput(GLFWwindow* window, VEC3 &cameraPos, const VEC3 cameraFront, const VEC3 cameraUp)
