@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "common.h"
 
 
 #define WINDOW_WIDTH 800

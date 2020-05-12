@@ -1,5 +1,5 @@
-#ifndef TRANSFORMS_H
-#define TRANSFORMS_H
+#ifndef COMMON_H
+#define COMMON_H
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -18,4 +18,4 @@ constexpr const char* TEX_CONTAINER = "../src/textures/container.jpg";
 constexpr const char* TEX_WALL = "../src/textures/wall.jpg";
 constexpr const char* TEX_BORDERLANDS = "../src/textures/borderlands3.bmp";
 
-#endif // !TRANSFORMS_H
+#endif // !COMMON_H
