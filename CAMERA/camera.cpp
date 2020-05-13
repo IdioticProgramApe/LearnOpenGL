@@ -1,8 +1,8 @@
 #include "common.h"
 #include "camera.hpp"
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 900
 #define WINDOW_TITLE "CAMERA"
 
 typedef glm::vec3 VEC3;

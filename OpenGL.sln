@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COORDINATE_SYSTEMS", "COORD
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CAMERA", "CAMERA\CAMERA.vcxproj", "{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COLORS", "COLORS\COLORS.vcxproj", "{80EBCC73-F267-4C04-A1FE-97B785C0AD64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -45,6 +47,10 @@ Global
 		{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}.Debug|x64.Build.0 = Debug|x64
 		{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}.Release|x64.ActiveCfg = Release|x64
 		{7BD01C50-FDEF-4726-A145-3E5028BF2ACF}.Release|x64.Build.0 = Release|x64
+		{80EBCC73-F267-4C04-A1FE-97B785C0AD64}.Debug|x64.ActiveCfg = Debug|x64
+		{80EBCC73-F267-4C04-A1FE-97B785C0AD64}.Debug|x64.Build.0 = Debug|x64
+		{80EBCC73-F267-4C04-A1FE-97B785C0AD64}.Release|x64.ActiveCfg = Release|x64
+		{80EBCC73-F267-4C04-A1FE-97B785C0AD64}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

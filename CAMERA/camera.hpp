@@ -17,14 +17,14 @@ enum CameraMovement
 };
 
 // default camera values
-const struct CameraValues
+namespace CameraValues
 {
-	const float YAW{ -90.0f };
-	const float PITCH{ 0.0f };
-	const float SPEED{ 2.5f };
-	const float SENSITIVITY{ 0.05f };
-	const float ZOOM{ 45.0f };  // for fov
-} Cam;
+	constexpr const float YAW{ -90.0f };
+	constexpr const float PITCH{ 0.0f };
+	constexpr const float SPEED{ 2.5f };
+	constexpr const float SENSITIVITY{ 0.1f };
+	constexpr const float ZOOM{ 45.0f };  // for fov
+};
 
 class Camera
 {
@@ -63,12 +63,12 @@ public:
 	Camera(
 		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
 		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
-		float yaw = Cam.YAW,
-		float pitch = Cam.PITCH
+		float yaw = CameraValues::YAW,
+		float pitch = CameraValues::PITCH
 	) : Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-		MovementSpeed(Cam.SPEED),
-		MouseSensitivity(Cam.SENSITIVITY),
-		Zoom(Cam.ZOOM)
+		MovementSpeed(CameraValues::SPEED),
+		MouseSensitivity(CameraValues::SENSITIVITY),
+		Zoom(CameraValues::ZOOM)
 	{
 		Position = position;
 		WorldUp = up;
@@ -81,12 +81,12 @@ public:
 	Camera(
 		float posX, float posY, float posZ,
 		float upX, float upY, float upZ,
-		float yaw = Cam.YAW,
-		float pitch = Cam.PITCH
+		float yaw = CameraValues::YAW,
+		float pitch = CameraValues::PITCH
 	) : Front(glm::vec3(0.0f, 0.0f, -1.0f)),
-		MovementSpeed(Cam.SPEED),
-		MouseSensitivity(Cam.SENSITIVITY),
-		Zoom(Cam.ZOOM)
+		MovementSpeed(CameraValues::SPEED),
+		MouseSensitivity(CameraValues::SENSITIVITY),
+		Zoom(CameraValues::ZOOM)
 	{
 		Position = glm::vec3(posX, posY, posZ);
 		WorldUp = glm::vec3(upX, upY, upZ);
@@ -115,10 +115,10 @@ public:
 			Position -= velocity * Front;
 			break;
 		case LEFT:
-			Position -= velocity * RIGHT;
+			Position -= velocity * Right;
 			break;
 		case RIGHT:
-			Position += velocity * RIGHT;
+			Position += velocity * Right;
 			break;
 		default:
 			break;
@@ -138,7 +138,7 @@ public:
 		if (constrainPitch)
 		{
 			if (Pitch > 89.0f) Pitch = 89.0f;
-			else if (Pitch < -89.0f) Pitch = -89.0f;
+			if (Pitch < -89.0f) Pitch = -89.0f;
 		}
 
 		updateCameraVectors();
@@ -148,9 +148,9 @@ public:
 	// only requires input on the vertical wheel-axis
 	void processMouseScroll(float yoffset)
 	{
-		if (Zoom >= 1.0f&&Zoom <= 45.0f) Zoom -= yoffset;
-		else if (Zoom < 1.0f) Zoom = 1.0f;
-		else Zoom = 45.0f;
+		if (Zoom >= 1.0f && Zoom <= 45.0f) Zoom -= yoffset;
+		if (Zoom <= 1.0f) Zoom = 1.0f;
+		if (Zoom >= 45.0f) Zoom = 45.0f;
 	}
 };
 
