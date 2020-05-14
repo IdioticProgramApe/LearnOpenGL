@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const char* vertexShaderPath = ShaderPaths::VERTEX, const char* fragmentShaderPath = ShaderPaths::FRAGMENT)
+Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath)
 {
 	// read script
 	std::ifstream vertexBuffer, fragmentBuffer;
@@ -83,7 +83,22 @@ Shader::~Shader()
 {
 }
 
+
 void Shader::use()
 {
 	glUseProgram(this->ID);
+}
+
+
+void Shader::setVec3(const char* name, glm::vec3 vector)
+{
+	GLint location = glGetUniformLocation(this->ID, name);
+	glUniform3fv(location, 1, glm::value_ptr(vector));
+}
+
+
+void Shader::setMat4(const char* name, glm::mat4 matrix)
+{
+	GLint location = glGetUniformLocation(this->ID, name);
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }

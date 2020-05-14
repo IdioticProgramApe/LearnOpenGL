@@ -3,7 +3,12 @@
 
 namespace Objects
 {
-	constexpr auto CUBE[] = {
+	constexpr glm::vec3 COLOR_O = glm::vec3(1.0f, 0.5f, 0.31f);
+	constexpr glm::vec3 COLOR_L = glm::vec3(1.0f, 1.0f, 1.0f);
+	
+	constexpr glm::vec3 LIGHT(1.2f, 1.0f, 2.0f);
+
+	constexpr float CUBE[] = {
 		-0.5f, -0.5f, -0.5f,
 		 0.5f, -0.5f, -0.5f,
 		 0.5f,  0.5f, -0.5f,

@@ -71,11 +71,14 @@
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="callback.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callback.h" />
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="objects.h" />
+    <ClInclude Include="shader.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
