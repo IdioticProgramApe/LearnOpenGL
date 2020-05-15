@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CAMERA", "CAMERA\CAMERA.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COLORS", "COLORS\COLORS.vcxproj", "{80EBCC73-F267-4C04-A1FE-97B785C0AD64}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BASIC_LIGHTING", "BASIC_LIGHTING\BASIC_LIGHTING.vcxproj", "{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,10 @@ Global
 		{80EBCC73-F267-4C04-A1FE-97B785C0AD64}.Debug|x64.Build.0 = Debug|x64
 		{80EBCC73-F267-4C04-A1FE-97B785C0AD64}.Release|x64.ActiveCfg = Release|x64
 		{80EBCC73-F267-4C04-A1FE-97B785C0AD64}.Release|x64.Build.0 = Release|x64
+		{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}.Debug|x64.ActiveCfg = Debug|x64
+		{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}.Debug|x64.Build.0 = Debug|x64
+		{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}.Release|x64.ActiveCfg = Release|x64
+		{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
