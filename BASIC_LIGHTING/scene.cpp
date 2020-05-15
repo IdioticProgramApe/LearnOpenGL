@@ -56,8 +56,10 @@ int main()
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Objects::CUBE), Objects::CUBE, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// TODO: bind texture to the object
 	unsigned char* iData;
@@ -89,7 +91,7 @@ int main()
 	glGenVertexArrays(1, &lightVAO);
 	glBindVertexArray(lightVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO); // since VBO stores the correct data already
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 
@@ -115,6 +117,7 @@ int main()
 		glm::mat4 objectModel = model;
 		objectShader.setVec3("objectColor", Objects::COLOR_O);
 		objectShader.setVec3("lightColor", Objects::COLOR_L);
+		objectShader.setVec3("lightPos", Objects::LIGHT);
 		objectShader.setMat4("model", objectModel);
 		objectShader.setMat4("view", cam.getViewMatrix());
 		objectShader.setMat4("projection", projection);
