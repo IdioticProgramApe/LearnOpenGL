@@ -10,11 +10,14 @@
 #include "objects.h"
 #include "camera.hpp"
 
+#define MOVING_LIGHT true
 
 float deltaTime(0.0f), lastFrame(0.0f);
+bool firstMove{ true };
+float lastX{ (float)Window::WIDTH / 2 }, lastY{ (float)Window::WIDTH / 2 };
+Camera cam(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 
 void processInput(GLFWwindow* window);
-Camera cam(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
 
 int main()
 {
@@ -30,6 +33,7 @@ int main()
 		std::cout << "ERROR::WINDOW::CREATION" << std::endl;
 		glfwTerminate();
 		return -1;
+
 	}
 	glfwMakeContextCurrent(window);
 
@@ -97,8 +101,8 @@ int main()
 
 	// render...
 	glm::mat4 model(1.0f), view(1.0f), projection(1.0f);
-	projection = glm::perspective(glm::radians(45.0f), (float)Window::WIDTH / Window::HEIGHT, 0.1f, 100.0f);
 
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window))
 	{
@@ -112,27 +116,36 @@ int main()
 
 		processInput(window);
 
-		// draw object
-		objectShader.use();
-		glm::mat4 objectModel = model;
-		objectShader.setVec3("objectColor", Objects::COLOR_O);
-		objectShader.setVec3("lightColor", Objects::COLOR_L);
-		objectShader.setVec3("lightPos", Objects::LIGHT);
-		objectShader.setMat4("model", objectModel);
-		objectShader.setMat4("view", cam.getViewMatrix());
-		objectShader.setMat4("projection", projection);
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, sizeof(Objects::CUBE) / sizeof(float));
-		glBindVertexArray(0);
+#if MOVING_LIGHT
+		glm::vec3 light = glm::vec3(Objects::LIGHT.x * sin((float)glfwGetTime()), Objects::LIGHT.y, Objects::LIGHT.z * cos((float)glfwGetTime()));
+#else
+		glm::vec3 light = Objects::LIGHT;
+#endif
+
+		projection = glm::perspective(glm::radians(cam.Zoom), (float)Window::WIDTH / Window::HEIGHT, 0.1f, 100.0f);
 
 		// draw light
-		glm::mat4 lightModel = glm::translate(model, Objects::LIGHT);
+		glm::mat4 lightModel = glm::translate(model, light);
 		lightModel = glm::scale(lightModel, glm::vec3(0.2f));
 		lightShader.use();
 		lightShader.setMat4("model", lightModel);
 		lightShader.setMat4("view", cam.getViewMatrix());
 		lightShader.setMat4("projection", projection);
 		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(Objects::CUBE) / sizeof(float));
+		glBindVertexArray(0);
+
+		// draw object
+		objectShader.use();
+		glm::mat4 objectModel = model;
+		objectShader.setVec3("objectColor", Objects::COLOR_O);
+		objectShader.setVec3("lightColor", Objects::COLOR_L);
+		objectShader.setVec3("lightPos", light);
+		objectShader.setVec3("viewPos", cam.Position);
+		objectShader.setMat4("model", objectModel);  // this model matrix is uniform matrix (no need for normal matrix)
+		objectShader.setMat4("view", cam.getViewMatrix());
+		objectShader.setMat4("projection", projection);
+		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, sizeof(Objects::CUBE) / sizeof(float));
 		glBindVertexArray(0);
 
@@ -156,4 +169,33 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) cam.processKeyboard(BACKWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) cam.processKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) cam.processKeyboard(RIGHT, deltaTime);
+}
+
+
+// callbacks
+void Callback::framebufferSize(GLFWwindow* window, GLint width, GLint height)
+{
+	glViewport(0, 0, width, height);
+}
+
+void Callback::cursorPos(GLFWwindow* window, double xPos, double yPos)
+{
+	if (firstMove)
+	{
+		lastX = xPos;
+		lastY = yPos;
+		firstMove = false;
+	}
+
+	float xOffset = xPos - lastX;
+	float yOffset = lastY - yPos;
+
+	// TODO: process xOffset and yOffset
+	cam.processMouseMovement(xOffset, yOffset);
+}
+
+void Callback::scroll(GLFWwindow* window, double xOffset, double yOffset)
+{
+	// TODO: process yOffset
+	cam.processMouseScroll(yOffset);
 }

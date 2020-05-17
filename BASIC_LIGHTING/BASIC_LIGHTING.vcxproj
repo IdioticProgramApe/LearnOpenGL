@@ -69,7 +69,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\glad.c" />
-    <ClCompile Include="callback.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="shader.cpp" />
   </ItemGroup>
