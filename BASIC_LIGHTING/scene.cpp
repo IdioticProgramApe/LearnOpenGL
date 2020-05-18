@@ -192,6 +192,9 @@ void Callback::cursorPos(GLFWwindow* window, double xPos, double yPos)
 
 	// TODO: process xOffset and yOffset
 	cam.processMouseMovement(xOffset, yOffset);
+
+	lastX = xPos;
+	lastY = yPos;
 }
 
 void Callback::scroll(GLFWwindow* window, double xOffset, double yOffset)
