@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COLORS", "COLORS\COLORS.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BASIC_LIGHTING", "BASIC_LIGHTING\BASIC_LIGHTING.vcxproj", "{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MATERIALS", "MATERIALS\MATERIALS.vcxproj", "{FB7E4692-C0EA-40AA-AD92-99F907E70045}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -57,6 +59,10 @@ Global
 		{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}.Debug|x64.Build.0 = Debug|x64
 		{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}.Release|x64.ActiveCfg = Release|x64
 		{293F5B90-8BFE-43A6-AA43-C7A4949C7E16}.Release|x64.Build.0 = Release|x64
+		{FB7E4692-C0EA-40AA-AD92-99F907E70045}.Debug|x64.ActiveCfg = Debug|x64
+		{FB7E4692-C0EA-40AA-AD92-99F907E70045}.Debug|x64.Build.0 = Debug|x64
+		{FB7E4692-C0EA-40AA-AD92-99F907E70045}.Release|x64.ActiveCfg = Release|x64
+		{FB7E4692-C0EA-40AA-AD92-99F907E70045}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

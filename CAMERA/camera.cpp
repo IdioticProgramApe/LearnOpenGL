@@ -283,6 +283,9 @@ void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
 	float xoffset = xpos - lastX;
 	float yoffset = lastY - ypos;  // reversed since y-coordinates range from bottom to top
 
+	lastX = xpos;
+	lastY = ypos;
+
 	cam.processMouseMovement(xoffset, yoffset, true);
 }
 
