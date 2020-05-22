@@ -122,7 +122,7 @@ void Shader::setMaterial(const char* name, Material material)
 {
 	std::string nameString = name;
 	this->setInt((nameString + (std::string)".diffuse").c_str(), material.diffuse);
-	this->setVec3((nameString + (std::string)".specular").c_str(), material.specular);
+	this->setInt((nameString + (std::string)".specular").c_str(), material.specular);
 	this->setFloat((nameString + (std::string)".shininess").c_str(), material.shininess);
 }
 

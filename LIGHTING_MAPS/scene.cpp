@@ -70,6 +70,7 @@ int main()
 	glEnableVertexAttribArray(2);
 
 	Texture diffuseMap(ImagePaths::CONTAINER);
+	Texture specularMap(ImagePaths::CONTAINER_SPECULAR);
 
 	// set up a lighting... (using a new VAO)
 	unsigned int lightVAO;
@@ -134,6 +135,8 @@ int main()
 		objectShader.setMat4("projection", projection);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, diffuseMap.getTextureID());
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, specularMap.getTextureID());
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);

@@ -6,7 +6,7 @@
 struct Material
 {
 	int diffuse{ 0 };
-	glm::vec3 specular{ glm::vec3(0.5f, 0.5f, 0.5f) };
+	int specular{ 1 };
 	float shininess{ 32.0f };
 };
 

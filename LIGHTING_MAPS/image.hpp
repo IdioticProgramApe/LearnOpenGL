@@ -12,6 +12,7 @@
 namespace ImagePaths
 {
 	constexpr auto CONTAINER = "../src/textures/container2.png";
+	constexpr auto CONTAINER_SPECULAR = "../src/textures/container2_specular.png";
 }
 
 class Texture
