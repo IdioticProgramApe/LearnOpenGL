@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MATERIALS", "MATERIALS\MATE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LIGHTING_MAPS", "LIGHTING_MAPS\LIGHTING_MAPS.vcxproj", "{BD280F73-C30E-45EA-A6E2-B40F5AEB04DF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LIGHT_CASTERS", "LIGHT_CASTERS\LIGHT_CASTERS.vcxproj", "{6CE0B18F-AD7A-4E1F-B846-E2C8FE2C2BED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -69,6 +71,10 @@ Global
 		{BD280F73-C30E-45EA-A6E2-B40F5AEB04DF}.Debug|x64.Build.0 = Debug|x64
 		{BD280F73-C30E-45EA-A6E2-B40F5AEB04DF}.Release|x64.ActiveCfg = Release|x64
 		{BD280F73-C30E-45EA-A6E2-B40F5AEB04DF}.Release|x64.Build.0 = Release|x64
+		{6CE0B18F-AD7A-4E1F-B846-E2C8FE2C2BED}.Debug|x64.ActiveCfg = Debug|x64
+		{6CE0B18F-AD7A-4E1F-B846-E2C8FE2C2BED}.Debug|x64.Build.0 = Debug|x64
+		{6CE0B18F-AD7A-4E1F-B846-E2C8FE2C2BED}.Release|x64.ActiveCfg = Release|x64
+		{6CE0B18F-AD7A-4E1F-B846-E2C8FE2C2BED}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
