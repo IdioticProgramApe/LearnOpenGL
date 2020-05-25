@@ -126,13 +126,18 @@ void Shader::setMaterial(const char* name, Material material)
 	this->setFloat((nameString + (std::string)".shininess").c_str(), material.shininess);
 }
 
-void Shader::setLight(const char* name, Light light)
+void Shader::setPointLight(const char* name, PointLight pointLight)
 {
 	std::string nameString = name;
-	this->setVec3((nameString + (std::string)".position").c_str(), light.position);
-	this->setVec3((nameString + (std::string)".ambient").c_str(), light.ambient);
-	this->setVec3((nameString + (std::string)".diffuse").c_str(), light.diffuse);
-	this->setVec3((nameString + (std::string)".specular").c_str(), light.specular);
+	this->setVec3((nameString + (std::string)".position").c_str(), pointLight.position);
+
+	this->setVec3((nameString + (std::string)".ambient").c_str(), pointLight.ambient);
+	this->setVec3((nameString + (std::string)".diffuse").c_str(), pointLight.diffuse);
+	this->setVec3((nameString + (std::string)".specular").c_str(), pointLight.specular);
+
+	this->setFloat((nameString + (std::string)".constant").c_str(), pointLight.constant);
+	this->setFloat((nameString + (std::string)".linear").c_str(), pointLight.linear);
+	this->setFloat((nameString + (std::string)".quadratic").c_str(), pointLight.quadratic);
 }
 
 void Shader::setDirectLight(const char* name, DirectLight directLight)
@@ -142,4 +147,17 @@ void Shader::setDirectLight(const char* name, DirectLight directLight)
 	this->setVec3((nameString + (std::string)".ambient").c_str(), directLight.ambient);
 	this->setVec3((nameString + (std::string)".diffuse").c_str(), directLight.diffuse);
 	this->setVec3((nameString + (std::string)".specular").c_str(), directLight.specular);
+}
+
+void Shader::setSpotLight(const char* name, SpotLight spotLight)
+{
+	std::string nameString = name;
+	this->setVec3((nameString + (std::string)".position").c_str(), spotLight.position);
+	this->setVec3((nameString + (std::string)".direction").c_str(), spotLight.direction);
+	this->setFloat((nameString + (std::string)".cutOff").c_str(), glm::cos(glm::radians(spotLight.cutOff)));
+	this->setFloat((nameString + (std::string)".outerCutOff").c_str(), glm::cos(glm::radians(spotLight.outerCutOff)));
+
+	this->setVec3((nameString + (std::string)".ambient").c_str(), spotLight.ambient);
+	this->setVec3((nameString + (std::string)".diffuse").c_str(), spotLight.diffuse);
+	this->setVec3((nameString + (std::string)".specular").c_str(), spotLight.specular);
 }

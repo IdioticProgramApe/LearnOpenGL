@@ -1,6 +1,6 @@
 #version 330 core
 
-struct DirectLight
+struct PointLight
 {
 	vec3 direction;
 	vec3 ambient;
@@ -10,7 +10,7 @@ struct DirectLight
 
 out vec4 FragColor;
 
-uniform DirectLight light;
+uniform PointLight light;
 
 void main()
 {

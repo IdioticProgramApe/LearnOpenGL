@@ -11,11 +11,13 @@
 
 namespace ShaderPaths
 {
-	constexpr auto VERTEX_L = "./shaders/light.vs";
-	constexpr auto FRAGMENT_L = "./shaders/light.fs";
+	constexpr auto POINT_LIGHT_V = "./shaders/pointLight.vs";
+	constexpr auto POINT_LIGHT_F = "./shaders/pointLight.fs";
 
-	constexpr auto VERTEX_O = "./shaders/object.vs";
-	constexpr auto FRAGMENT_O = "./shaders/object.fs";
+	constexpr auto OBJECT_V = "./shaders/object.vs";
+	constexpr auto POINT_OBJECT_F = "./shaders/pointObject.fs";
+	constexpr auto DIRECT_OBJECT_F = "./shaders/directObject.fs";
+	constexpr auto SPOT_OBJECT_F = "./shaders/spotObject.fs";
 }
 
 class Shader
@@ -32,8 +34,9 @@ public:
 	void setVec3(const char* name, glm::vec3 vector);
 	void setMat4(const char* name, glm::mat4 matrix);
 	void setMaterial(const char* name, Material material);
-	void setLight(const char* name, Light light);
+	void setPointLight(const char* name, PointLight pointLight);
 	void setDirectLight(const char* name, DirectLight directLight);
+	void setSpotLight(const char* name, SpotLight spotLight);
 };
 
 #endif // !SHADER_H

@@ -12,7 +12,8 @@
 #include "materials.h"
 #include "lights.h"
 
-#define LIGHT_COLOR_CAHNGE true
+#define LIGHT_COLOR_CAHNGE false
+#define USE_LIGHT 2
 
 float deltaTime(0.0f), lastFrame(0.0f);
 bool firstMove{ true };
@@ -50,9 +51,18 @@ int main()
 		return -1;
 	}
 
-	// create a shader
-	Shader objectShader(ShaderPaths::VERTEX_O, ShaderPaths::FRAGMENT_O);
-	//Shader lightShader(ShaderPaths::VERTEX_L, ShaderPaths::FRAGMENT_L);
+	// create shaders...
+#if USE_LIGHT == 0  /* directional light */
+	std::cout << "SHADER::LIGHT::DIRECTIONAL\n";
+	Shader objectShader(ShaderPaths::OBJECT_V, ShaderPaths::DIRECT_OBJECT_F);
+#elif USE_LIGHT == 1 /* point light */
+	std::cout << "SHADER::LIGHT::POINT\n";
+	Shader objectShader(ShaderPaths::OBJECT_V, ShaderPaths::POINT_OBJECT_F);
+	Shader lightShader(ShaderPaths::POINT_LIGHT_V, ShaderPaths::POINT_LIGHT_F);
+#elif USE_LIGHT == 2 /* spot light */
+	std::cout << "SHADER::LIGHT::SPOT\n";
+	Shader objectShader(ShaderPaths::OBJECT_V, ShaderPaths::SPOT_OBJECT_F);
+#endif
 
 	// configure the buffers: VBO and VAO
 	unsigned int VBO, VAO;
@@ -68,6 +78,14 @@ int main()
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
+
+	// configure the buffer: lightVAO
+	unsigned int lightVAO;
+	glGenVertexArrays(1, &lightVAO);
+	glBindVertexArray(lightVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 	Texture diffuseMap(ImagePaths::CONTAINER);
 	Texture specularMap(ImagePaths::CONTAINER_SPECULAR);
@@ -91,6 +109,22 @@ int main()
 
 		projection = glm::perspective(glm::radians(cam.Zoom), (float)Window::WIDTH / Window::HEIGHT, 0.1f, 100.0f);
 
+#if USE_LIGHT == 1
+		// draw light object
+		lightShader.use();
+		glm::mat4 lightModel = model;
+		lightModel = glm::translate(lightModel, Lights::defaultPointLight.position);
+		lightModel = glm::scale(lightModel, glm::vec3(0.2f));
+		lightShader.setDirectLight("light", Lights::defaultDirectLight);
+		lightShader.setMat4("projection", projection);
+		lightShader.setMat4("view", cam.getViewMatrix());
+		lightShader.setMat4("model", lightModel);
+
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+#endif
+
 		// draw object
 		objectShader.use();
 		int cubeIdx = 0;
@@ -100,7 +134,14 @@ int main()
 			objectModel = glm::translate(objectModel, cubePosition);
 			objectModel = glm::rotate(objectModel, glm::radians(20.0f * cubeIdx), glm::vec3(1.0f, 0.3f, 0.5f));
 			objectShader.setMaterial("material", Materials::defaultMaterial);
+#if USE_LIGHT == 0
 			objectShader.setDirectLight("light", Lights::defaultDirectLight);
+#elif USE_LIGHT == 1
+			objectShader.setPointLight("light", Lights::defaultPointLight);
+#elif USE_LIGHT == 2
+			SpotLight spotLight{ cam.Position, cam.Front };
+			objectShader.setSpotLight("light", spotLight);
+#endif
 #if LIGHT_COLOR_CAHNGE
 			glm::vec3 lightColor;
 			lightColor.x = sin((float)glfwGetTime() * 2.0f);
@@ -173,6 +214,5 @@ void Callback::cursorPos(GLFWwindow* window, double xPos, double yPos)
 
 void Callback::scroll(GLFWwindow* window, double xOffset, double yOffset)
 {
-	// TODO: process yOffset
 	cam.processMouseScroll(yOffset);
 }
