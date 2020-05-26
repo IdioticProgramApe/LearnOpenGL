@@ -133,8 +133,8 @@ int main()
 			for (auto lightPos : Lights::pointLightPositions)
 			{
 				PointLight pointLight{ lightPos };
-				char pointLightName[14];
-				sprintf_s(pointLightName, 14, "pointLight[%d]", lightCnt++);
+				char pointLightName[16];
+				sprintf_s(pointLightName, 16, "pointLights[%d]", lightCnt++);
 				objectShader.setPointLight(pointLightName, pointLight);
 			}
 
