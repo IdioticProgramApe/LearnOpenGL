@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LIGHT_CASTERS", "LIGHT_CAST
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MULTIPLE_LIGHTS", "MULTIPLE_LIGHTS\MULTIPLE_LIGHTS.vcxproj", "{B0EA0F55-C6F9-4A8E-877F-CBCBF90663D6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MESH", "MESH\MESH.vcxproj", "{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,10 @@ Global
 		{B0EA0F55-C6F9-4A8E-877F-CBCBF90663D6}.Debug|x64.Build.0 = Debug|x64
 		{B0EA0F55-C6F9-4A8E-877F-CBCBF90663D6}.Release|x64.ActiveCfg = Release|x64
 		{B0EA0F55-C6F9-4A8E-877F-CBCBF90663D6}.Release|x64.Build.0 = Release|x64
+		{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}.Debug|x64.ActiveCfg = Debug|x64
+		{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}.Debug|x64.Build.0 = Debug|x64
+		{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}.Release|x64.ActiveCfg = Release|x64
+		{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
