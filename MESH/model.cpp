@@ -2,6 +2,10 @@
 
 void Model::Draw(Shader shader)
 {
+	for (auto mesh : m_meshes)
+	{
+		mesh.Draw(shader);
+	}
 }
 
 void Model::m_loadModel(char * path)
