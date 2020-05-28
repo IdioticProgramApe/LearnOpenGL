@@ -9,6 +9,33 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
 	m_setupMesh();
 }
 
+void Mesh::Draw(Shader shader)
+{
+	unsigned int diffuseNb = 1;
+	unsigned int specularNb = 1;
+	for (unsigned int i = 0; i < m_textures.size(); ++i)
+	{
+		glActiveTexture(GL_TEXTURE0 + i);
+
+		// set uniform sampler2D (textures) in shader
+		std::stringstream ss;
+		std::string number;
+		std::string name = m_textures[i].type;
+		if (name == "tetxure_diffuse") ss << diffuseNb++;
+		else if (name == "texture_specular") ss << specularNb++;
+		number = ss.str();
+
+		shader.setInt(("material." + name + number).c_str(), i);
+		glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
+	}
+	glActiveTexture(GL_TEXTURE0); // deactivate textures
+
+	// draw meshes
+	glBindVertexArray(mVAO);
+	glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+}
+
 void Mesh::m_setupMesh()
 {
 	glGenBuffers(1, &mVBO);
