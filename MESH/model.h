@@ -6,6 +6,7 @@
 #include <assimp/postprocess.h>
 
 #include <string>
+#include <iostream>
 #include <vector>
 
 #include "shader.h"
