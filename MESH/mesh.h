@@ -3,6 +3,8 @@
 
 
 #include <glm/glm.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
 
 #include <string>
 #include <sstream>
@@ -21,6 +23,7 @@ struct Texture
 {
 	unsigned int id;
 	std::string type;  // i.e. a diffuse map or a specular map
+	aiString path;
 };
 
 class Mesh

@@ -4,6 +4,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <glm/glm.hpp>
 
 #include <string>
 #include <iostream>
@@ -11,6 +12,7 @@
 
 #include "shader.h"
 #include "mesh.h"
+#include "image.hpp"
 
 class Model
 {
@@ -20,6 +22,7 @@ public:
 	void Draw(Shader shader);
 
 private:
+	std::vector<Texture> m_loadedTextures;
 	std::vector<Mesh> m_meshes;
 	std::string m_directory;
 
