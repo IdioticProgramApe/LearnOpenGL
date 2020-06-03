@@ -5,9 +5,8 @@ void Model::Draw(Shader shader)
 	for (auto mesh : m_meshes) mesh.Draw(shader);
 }
 
-void Model::m_loadModel(char* path)
+void Model::m_loadModel(char * path)
 {
-	std::string stringPath = (std::string)path;
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -16,6 +15,8 @@ void Model::m_loadModel(char* path)
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
 		return;
 	}
+
+	std::string stringPath = (std::string)path;
 	m_directory = stringPath.substr(0, stringPath.find_last_of('/'));
 
 	m_processNode(scene->mRootNode, scene);
