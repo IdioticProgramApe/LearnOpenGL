@@ -62,6 +62,8 @@ namespace Objects
 		glm::vec3( 1.5f,  0.2f,  -1.5f),
 		glm::vec3(-1.3f,  1.0f,  -1.5f),
 	};
+
+	constexpr const char* IRON_MAN = "../src/3d_assets/IronMan/IronMan.obj";
 }
 
 #endif // !OBJECTS_H

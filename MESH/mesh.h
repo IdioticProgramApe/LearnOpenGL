@@ -29,6 +29,7 @@ struct Texture
 class Mesh
 {
 public:
+	unsigned int mVAO;
 	std::vector<Vertex> m_vertices;
 	std::vector<unsigned int> m_indices;
 	std::vector<Texture> m_textures;
@@ -38,8 +39,7 @@ public:
 	void Draw(Shader shader);
 
 private:
-	unsigned int mVAO, mVBO, mEBO;
-
+	unsigned int mVBO, mEBO;
 	void m_setupMesh();  // to initialize the buffers
 };
 

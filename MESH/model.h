@@ -12,12 +12,12 @@
 
 #include "shader.h"
 #include "mesh.h"
-#include "image.hpp"
+#include "image.h"
 
 class Model
 {
 public:
-	Model(char *path) { m_loadModel(path); }
+	Model(const char *path) { m_loadModel(path); }
 	~Model() {};
 	void Draw(Shader shader);
 
@@ -26,7 +26,7 @@ private:
 	std::vector<Mesh> m_meshes;
 	std::string m_directory;
 
-	void m_loadModel(char *path);
+	void m_loadModel(const char *path);
 	void m_processNode(aiNode *node, const aiScene *scene);
 	Mesh m_processMesh(aiMesh *mesh, const aiScene *scene);
 	std::vector<Texture> m_loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);

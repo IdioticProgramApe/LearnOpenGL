@@ -4,7 +4,6 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "image.hpp"
 #include "window.h"
 #include "callback.h"
 #include "shader.h"
@@ -12,6 +11,8 @@
 #include "camera.hpp"
 #include "materials.h"
 #include "lights.h"
+#include "mesh.h"
+#include "model.h"
 
 #define LIGHT_COLOR_CAHNGE false
 
@@ -45,6 +46,9 @@ int main()
 	glfwSetCursorPosCallback(window, Callback::cursorPos);
 	glfwSetScrollCallback(window, Callback::scroll);
 
+	// GLFW should capture the mouse movement
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "ERROR::PROC_ADDRESS::LOADING" << std::endl;
@@ -53,38 +57,15 @@ int main()
 
 	// create shaders...
 	Shader objectShader(ShaderPaths::OBJECT_V, ShaderPaths::OBJECT_F);
-	Shader lightShader(ShaderPaths::POINT_LIGHT_V, ShaderPaths::POINT_LIGHT_F);
 
-	// configure the buffers: VBO and VAO
-	unsigned int VBO, VAO;
-	glGenBuffers(1, &VBO);
-	glGenVertexArrays(1, &VAO);
+	Model ironMan(Objects::IRON_MAN);
 
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Objects::CUBE_PRIME), Objects::CUBE_PRIME, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	// configure the buffer: lightVAO
-	unsigned int lightVAO;
-	glGenVertexArrays(1, &lightVAO);
-	glBindVertexArray(lightVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	Texture diffuseMap(ImagePaths::CONTAINER);
-	Texture specularMap(ImagePaths::CONTAINER_SPECULAR);
+	/*Texture diffuseMap(ImagePaths::CONTAINER);
+	Texture specularMap(ImagePaths::CONTAINER_SPECULAR);*/
 
 	// render...
 	glm::mat4 model(1.0f), view(1.0f), projection(1.0f);
 
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window))
 	{
@@ -100,76 +81,24 @@ int main()
 
 		projection = glm::perspective(glm::radians(cam.Zoom), (float)Window::WIDTH / Window::HEIGHT, 0.1f, 100.0f);
 
-		for (auto lightPos : Lights::pointLightPositions)
-		{
-			// draw light object
-			lightShader.use();
-			glm::mat4 lightModel = model;
-			lightModel = glm::translate(lightModel, lightPos);
-			lightModel = glm::scale(lightModel, glm::vec3(0.2f));
-			lightShader.setDirectLight("light", Lights::defaultDirectLight);
-			lightShader.setMat4("projection", projection);
-			lightShader.setMat4("view", cam.getViewMatrix());
-			lightShader.setMat4("model", lightModel);
-
-			glBindVertexArray(lightVAO);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-			glBindVertexArray(0);
-		}
-
-		// draw object
 		objectShader.use();
-		int cubeIdx = 0;
-		for (auto cubePosition : Objects::CUBE_POSITIONS)
-		{
-			glm::mat4 objectModel = model;
-			objectModel = glm::translate(objectModel, cubePosition);
-			objectModel = glm::rotate(objectModel, glm::radians(20.0f * cubeIdx), glm::vec3(1.0f, 0.3f, 0.5f));
-			objectShader.setMaterial("material", Materials::defaultMaterial);
+		objectShader.setMaterial("material", Materials::defaultMaterial);
+		objectShader.setDirectLight("directLight", Lights::defaultDirectLight);
 
-			objectShader.setDirectLight("directLight", Lights::defaultDirectLight);
+		SpotLight spotLight{ cam.Position, cam.Front };
+		objectShader.setSpotLight("spotLight", spotLight);
 
-			int lightCnt = 0;
-			for (auto lightPos : Lights::pointLightPositions)
-			{
-				PointLight pointLight{ lightPos };
-				char pointLightName[16];
-				sprintf_s(pointLightName, 16, "pointLights[%d]", lightCnt++);
-				objectShader.setPointLight(pointLightName, pointLight);
-			}
+		objectShader.setVec3("viewPos", cam.Position);
+		objectShader.setMat4("model", model);  // this model matrix is uniform matrix (no need for normal matrix)
+		objectShader.setMat4("view", cam.getViewMatrix());
+		objectShader.setMat4("projection", projection);
 
-			SpotLight spotLight{ cam.Position, cam.Front };
-			objectShader.setSpotLight("spotLight", spotLight);
-
-#if LIGHT_COLOR_CAHNGE
-			glm::vec3 lightColor;
-			lightColor.x = sin((float)glfwGetTime() * 2.0f);
-			lightColor.y = sin((float)glfwGetTime() * 0.7f);
-			lightColor.z = sin((float)glfwGetTime() * 1.0f);
-			objectShader.setVec3("light.ambient", lightColor * glm::vec3(0.2f));
-			objectShader.setVec3("light.diffuse", lightColor * glm::vec3(0.5f));
-#endif
-			objectShader.setVec3("viewPos", cam.Position);
-			objectShader.setMat4("model", objectModel);  // this model matrix is uniform matrix (no need for normal matrix)
-			objectShader.setMat4("view", cam.getViewMatrix());
-			objectShader.setMat4("projection", projection);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, diffuseMap.getTextureID());
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, specularMap.getTextureID());
-			glBindVertexArray(VAO);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-			glBindVertexArray(0);
-
-			cubeIdx += 1;
-		}
+		ironMan.Draw(objectShader);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
 	glDisable(GL_DEPTH_TEST);
-	glDeleteBuffers(1, &VBO);
-	glDeleteVertexArrays(1, &VAO);
 
 	glfwTerminate();
 
@@ -204,7 +133,6 @@ void Callback::cursorPos(GLFWwindow* window, double xPos, double yPos)
 	float xOffset = xPos - lastX;
 	float yOffset = lastY - yPos;
 
-	// TODO: process xOffset and yOffset
 	cam.processMouseMovement(xOffset, yOffset);
 
 	lastX = xPos;

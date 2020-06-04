@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION
 #include "model.h"
 
 void Model::Draw(Shader shader)
@@ -5,7 +6,7 @@ void Model::Draw(Shader shader)
 	for (auto mesh : m_meshes) mesh.Draw(shader);
 }
 
-void Model::m_loadModel(char * path)
+void Model::m_loadModel(const char * path)
 {
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -28,7 +29,7 @@ void Model::m_processNode(aiNode * node, const aiScene * scene)
 	for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-		m_meshes.emplace_back(mesh);
+		m_meshes.emplace_back(m_processMesh(mesh, scene));
 	}
 
 	// process children nodes
@@ -60,17 +61,16 @@ Mesh Model::m_processMesh(aiMesh * mesh, const aiScene * scene)
 		vertex.normal.z = mesh->mNormals[i].z;
 
 		// texture coords
-		if (mesh->mTextureCoords)
+		if (mesh->mTextureCoords[0])
 		{
-			vertex.texCoords.x = mesh->mTextureCoords[i]->x;
-			vertex.texCoords.y = mesh->mTextureCoords[i]->y;
+			vertex.texCoords.x = mesh->mTextureCoords[0][i].x;
+			vertex.texCoords.y = mesh->mTextureCoords[0][i].y;
 		}
 		else
 		{
-			vertex.texCoords = glm::vec2(0.0f);
+			vertex.texCoords = glm::vec2(0.0f, 0.0f);
 		}
 		
-
 		vertices.emplace_back(vertex);
 	}
 	// process indices
@@ -87,11 +87,11 @@ Mesh Model::m_processMesh(aiMesh * mesh, const aiScene * scene)
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<Texture> diffuseMap = m_loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-		textures.insert(textures.end(), diffuseMap.begin(), diffuseMap.end());
+		std::vector<Texture> diffuseMaps = m_loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-		std::vector<Texture> specularMap = m_loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-		textures.insert(textures.end(), specularMap.begin(), specularMap.end());
+		std::vector<Texture> specularMaps = m_loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
 	return Mesh(vertices, indices, textures);
@@ -118,7 +118,7 @@ std::vector<Texture> Model::m_loadMaterialTextures(aiMaterial * mat, aiTextureTy
 		if (!skip)
 		{
 			Texture texture;
-			texture.id = TextureFromFile(str.C_Str(), m_directory).ID;
+			texture.id = TextureFromFile(str.C_Str(), m_directory).getTextureID();
 			texture.type = typeName;
 			texture.path = str;
 			textures.emplace_back(texture);
