@@ -14,8 +14,6 @@
 #include "mesh.h"
 #include "model.h"
 
-#define LIGHT_COLOR_CAHNGE false
-
 float deltaTime(0.0f), lastFrame(0.0f);
 bool firstMove{ true };
 float lastX{ (float)Window::WIDTH / 2 }, lastY{ (float)Window::WIDTH / 2 };
@@ -80,16 +78,18 @@ int main()
 		processInput(window);
 
 		projection = glm::perspective(glm::radians(cam.Zoom), (float)Window::WIDTH / Window::HEIGHT, 0.1f, 100.0f);
+		glm::mat4 objectModel = model;
+		objectModel = glm::translate(objectModel, glm::vec3(0.0f));
+		objectModel = glm::scale(objectModel, glm::vec3(1.0f));
 
 		objectShader.use();
-		objectShader.setMaterial("material", Materials::defaultMaterial);
 		objectShader.setDirectLight("directLight", Lights::defaultDirectLight);
 
 		SpotLight spotLight{ cam.Position, cam.Front };
 		objectShader.setSpotLight("spotLight", spotLight);
 
 		objectShader.setVec3("viewPos", cam.Position);
-		objectShader.setMat4("model", model);  // this model matrix is uniform matrix (no need for normal matrix)
+		objectShader.setMat4("model", objectModel);  // this model matrix is uniform matrix (no need for normal matrix)
 		objectShader.setMat4("view", cam.getViewMatrix());
 		objectShader.setMat4("projection", projection);
 

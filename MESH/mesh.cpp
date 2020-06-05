@@ -21,7 +21,7 @@ void Mesh::Draw(Shader shader)
 		std::stringstream ss;
 		std::string number;
 		std::string name = m_textures[i].type;
-		if (name == "tetxure_diffuse") ss << diffuseNb++;
+		if (name == "texture_diffuse") ss << diffuseNb++;
 		else if (name == "texture_specular") ss << specularNb++;
 		number = ss.str();
 
@@ -44,10 +44,10 @@ void Mesh::m_setupMesh()
 
 	glBindVertexArray(mVAO);
 	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), &m_indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), &m_indices[0], GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 	glEnableVertexAttribArray(0);

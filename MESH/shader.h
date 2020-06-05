@@ -11,9 +11,6 @@
 
 namespace ShaderPaths
 {
-	constexpr auto POINT_LIGHT_V = "./shaders/pointLight.vs";
-	constexpr auto POINT_LIGHT_F = "./shaders/pointLight.fs";
-
 	constexpr auto OBJECT_V = "./shaders/object.vs";
 	constexpr auto OBJECT_F = "./shaders/object.fs";
 }
