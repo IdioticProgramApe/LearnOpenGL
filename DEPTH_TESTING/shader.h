@@ -128,6 +128,24 @@ public:
 	{
 		glUseProgram(ID);
 	}
+
+	void setBool(const std::string &name, bool value) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform1i(location, (int)value);
+	}
+
+	void setInt(const std::string &name, int value) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform1i(location, value);
+	}
+
+	void setFloat(const std::string &name, float value) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform1f(location, value);
+	}
 };
 
 #endif // !SHADER_H

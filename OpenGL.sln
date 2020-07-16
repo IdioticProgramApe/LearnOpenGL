@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MULTIPLE_LIGHTS", "MULTIPLE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MESH", "MESH\MESH.vcxproj", "{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DEPTH_TESTING", "DEPTH_TESTING\DEPTH_TESTING.vcxproj", "{E19325A5-FF63-4D5F-8BA3-3135F2897115}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -87,6 +89,10 @@ Global
 		{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}.Debug|x64.Build.0 = Debug|x64
 		{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}.Release|x64.ActiveCfg = Release|x64
 		{83FACCB6-92CD-431A-9B40-A2E3BD6CB592}.Release|x64.Build.0 = Release|x64
+		{E19325A5-FF63-4D5F-8BA3-3135F2897115}.Debug|x64.ActiveCfg = Debug|x64
+		{E19325A5-FF63-4D5F-8BA3-3135F2897115}.Debug|x64.Build.0 = Debug|x64
+		{E19325A5-FF63-4D5F-8BA3-3135F2897115}.Release|x64.ActiveCfg = Release|x64
+		{E19325A5-FF63-4D5F-8BA3-3135F2897115}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
