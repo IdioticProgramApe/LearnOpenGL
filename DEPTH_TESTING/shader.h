@@ -146,6 +146,55 @@ public:
 		GLint location = glGetUniformLocation(ID, name.c_str());
 		glUniform1f(location, value);
 	}
+
+	void setVec2(const std::string &name, glm::vec2 &value) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform2fv(location, 1, &value[0]);
+	}
+	void setVec2(const std::string &name, float x, float y) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform2f(location, x, y);
+	}
+
+	void setVec3(const std::string &name, glm::vec3 &value) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform3fv(location, 1, &value[0]);
+	}
+	void setVec3(const std::string &name, float x, float y, float z) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform3f(location, x, y, z);
+	}
+
+	void setVec4(const std::string &name, glm::vec4 &value) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform4fv(location, 1, &value[0]);
+	}
+	void setVec4(const std::string &name, float x, float y, float z, float w) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniform4f(location, x, y, z, w);
+	}
+
+	void setMat2(const std::string &name, glm::mat2 &mat) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniformMatrix2fv(location, 1, GL_FALSE, &mat[0][0]);
+	}
+	void setMat3(const std::string &name, glm::mat3 &mat) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniformMatrix3fv(location, 1, GL_FALSE, &mat[0][0]);
+	}
+	void setMat4(const std::string &name, glm::mat4 &mat) const
+	{
+		GLint location = glGetUniformLocation(ID, name.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
+	}
 };
 
 #endif // !SHADER_H
