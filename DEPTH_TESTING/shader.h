@@ -119,6 +119,7 @@ public:
 		glLinkProgram(ID);
 		checkCompileErrors(ID, "PROGRAM");
 
+		// once the shaders are all linked to program, they are useless, can be safely deleted
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 		if (geometryPath != nullptr) glDeleteShader(geometry);

@@ -91,6 +91,79 @@ public:
 		m_pitch = pitch;
 		updateCameraVectors();
 	}
+
+	// returns the view matrix calculated using Euler Angles and the LookAt matrix
+	glm::mat4 getViewMatrix()
+	{
+		return glm::lookAt(m_position, m_position + m_front, m_up);
+	}
+
+	// processes input received from any keyboard-like input system
+	// Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing system)
+	void processKeyboard(CameraMovement direction, float deltaTime)
+	{
+		float velocity = m_movementSpeed * deltaTime;
+
+		// cannot use else if since all these movements can happen simultaneously
+		if (direction == FORWARD)
+		{
+			m_position += velocity * m_front;
+		}
+		if (direction == BACKWARD)
+		{
+			m_position -= velocity * m_front;
+		}
+		if (direction == LEFT)
+		{
+			m_position -= velocity * m_right;
+		}
+		if (direction == RIGHT)
+		{
+			m_position += velocity * m_right;
+		}
+	}
+
+	// process input received from a mouse input system
+	// Expects the offset value in both the x and y direction
+	void processMouseMovement(float xoffset, float yoffset, GLboolean lockPitch = true)
+	{
+		xoffset *= m_mouseSensitivity;
+		yoffset *= m_mouseSensitivity;
+
+		m_yaw += xoffset;
+		m_pitch += yoffset;
+
+		// lock the pitch to an interval
+		if (lockPitch)
+		{
+			if (m_pitch > 89.0f)
+			{
+				m_pitch = 89.0f;
+			}
+			else if (m_pitch < -89.0f)
+			{
+				m_pitch = -89.0f;
+			}
+		}
+
+		// update the front, right, up
+		updateCameraVectors();
+	}
+
+	// process input received from a mouse scroll-wheel event
+	// only requires input on the vertical wheel-axis
+	void processMouseScroll(float yoffset)
+	{
+		m_zoom -= yoffset;
+		if (m_zoom < 1.0f)
+		{
+			m_zoom = 1.0f;
+		}
+		else if (m_zoom > 45.0f)
+		{
+			m_zoom = 45.0f;
+		}
+	}
 };
 
 
