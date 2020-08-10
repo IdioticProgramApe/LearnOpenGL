@@ -113,6 +113,40 @@ private:
 		glGenBuffers(1, &VBO);
 		glGenBuffers(1, &EBO);
 		glGenVertexArrays(1, &VAO);
+
+		glBindVertexArray(VAO);
+		// load data into vertex buffer
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		// A great thing about struct is that their memory layout is sequential for its items
+		// the effect is that we can simply pass a pointer to the struct 
+		// and it translate perfectly to a glm::vec2/3 array which again translate 3/2 float which translates to a byte array
+		glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), &m_indices[0], GL_STATIC_DRAW);
+
+		// set the vertex attribute pointers
+		// vertex positions
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+
+		// vertex normal
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+
+		// vertex texture coords
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+
+		// vertex tangent
+		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+
+		// vertex bitangent
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+
+		glBindVertexArray(0);
 	}
 };
 
