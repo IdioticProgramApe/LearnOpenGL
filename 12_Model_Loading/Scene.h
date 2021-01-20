@@ -20,7 +20,7 @@ namespace WindowParams
 
 class Scene : public Singleton<Scene>
 {
-public:
+private:
 	Camera m_camera;
 
 	bool m_firstMove = true;
