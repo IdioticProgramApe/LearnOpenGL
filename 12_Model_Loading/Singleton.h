@@ -4,19 +4,19 @@
 #include <memory>
 
 template<typename T>
-class Singleton
-{
+class Singleton {
 public:
-	static std::shared_ptr<T> getInstance()
+	static T & getInstance()
 	{
-		static std::shared_ptr<T> instance{ new T }; // Guaranteed to be destroyed. Instantiated on first use.
-		return instance;
+		static const std::unique_ptr<T> instance{ new T };
+		return *instance;
 	}
 
-	Singleton() = default;
+	Singleton(const Singleton&) = delete;
+	Singleton & operator= (const Singleton) = delete;
 
-	Singleton(Singleton const&) = delete;
-	void operator=(Singleton const&) = delete;
+protected:
+	Singleton() {}
 };
 
 #endif // SINGLETON_H

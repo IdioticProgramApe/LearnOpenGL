@@ -10,16 +10,17 @@
 
 namespace WindowParams
 {
-	constexpr auto WIDTH = 800;
-	constexpr auto HEIGHT = 600;
+	constexpr auto WIDTH = 1920;
+	constexpr auto HEIGHT = 1080;
 	constexpr auto TITLE = "12_MESH";
 
 	constexpr auto COLOR = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-
 class Scene : public Singleton<Scene>
 {
+	friend class Singleton<Scene>;
+
 private:
 	Camera m_camera;
 
@@ -30,21 +31,31 @@ private:
 	
 	float m_lastX = WindowParams::WIDTH / 2.0f;
 	float m_lastY = WindowParams::HEIGHT / 2.0f;
-
+ 
 private:
+	Scene() {};
+
+public:
+
+	Camera & getCamera();
+
+	bool & getFirstMove();
+	float & getDeltaTime();
+	float & getLastFrame();
+	float & getLastX();
+	float & getLastY();
+
 	void processInput(GLFWwindow* window);
-
-public:
-	//callbacks
-	friend void framebufferSize(GLFWwindow* window, GLint width, GLint height);
-	friend void cursorPos(GLFWwindow* window, double xPos, double yPos);
-	friend void scroll(GLFWwindow* window, double xOffset, double yOffset);
-
-public:
-	Scene() = default;
-	virtual ~Scene() = default;
-
-	int launch();
 };
+
+namespace Callback
+{
+	///
+	void framebufferSize(GLFWwindow * window, GLint width, GLint height);
+	///
+	void cursorPos(GLFWwindow * window, double xPos, double yPos);
+	///
+	void scroll(GLFWwindow * window, double xOffset, double yOffset);
+}
 
 #endif // SCENE_H
