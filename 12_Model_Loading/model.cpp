@@ -1,4 +1,3 @@
-#define STB_IMAGE_IMPLEMENTATION
 #include "model.h"
 
 void Model::Draw(Shader shader)

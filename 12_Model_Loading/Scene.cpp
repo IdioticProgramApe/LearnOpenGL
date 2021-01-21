@@ -26,6 +26,14 @@ void Scene::processInput(GLFWwindow * window)
 	{
 		m_camera.processKeyboard(CameraMovement::RIGHT, m_deltaTime);
 	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		m_camera.processKeyboard(CameraMovement::UP, m_deltaTime);
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+	{
+		m_camera.processKeyboard(CameraMovement::DOWN, m_deltaTime);
+	}
 }
 
 Camera & Scene::getCamera()

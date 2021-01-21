@@ -9,19 +9,19 @@
 #include "materials.h"
 #include "lights.h"
 
-namespace ShaderPaths
-{
-	constexpr auto OBJECT_V = "./shaders/object.vs";
-	constexpr auto OBJECT_F = "./shaders/object.fs";
-}
+
+class ReadFileHandler;  // RAII automatically close the buffer
 
 class Shader
 {
-public:
-	unsigned int ID;
+private:
+	const char * m_vertShaderFile = "Vertex.glsl";
+	const char * m_fragShaderFile = "Fragment.glsl";
 
-	Shader(const char* vertexShaderPath, const char* fragmentShaderPath);
-	~Shader();
+	unsigned int m_id;
+public:
+	Shader();
+	virtual ~Shader() = default;
 
 	void use();
 	void setInt(const char* name, int value);

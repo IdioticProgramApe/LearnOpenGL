@@ -1,3 +1,5 @@
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "Scene.h"
 #include "shader.h"
 #include "objects.h"
@@ -40,8 +42,7 @@ int main()
 	}
 
 	// create shaders...
-	Shader objectShader(ShaderPaths::OBJECT_V, ShaderPaths::OBJECT_F);
-
+	Shader objectShader;
 	Model asset(Objects::NANO_SUIT);
 
 	/*Texture diffuseMap(ImagePaths::CONTAINER);

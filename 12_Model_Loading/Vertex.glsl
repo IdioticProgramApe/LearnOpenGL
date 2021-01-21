@@ -13,8 +13,13 @@ out vec2 TexCoords;
 
 void main()
 {
+	//ref: https://jsantell.com/model-view-projection/
 	gl_Position = projection * view * model * vec4(aPos, 1.0f);
-	FragPos = vec3(model * vec4(aPos, 1.0f));
+	
+	FragPos = vec3(model * vec4(aPos, 1.0f));\
+
+	//ref: https://en.wikibooks.org/wiki/GLSL_Programming/Applying_Matrix_Transformations
 	Normal = mat3(transpose(inverse(model))) * aNormal;
+
 	TexCoords = aTexCoords;
 }
