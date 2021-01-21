@@ -4,7 +4,8 @@
 #include <memory>
 
 template<typename T>
-class Singleton {
+class Singleton 
+{
 public:
 	static T & getInstance()
 	{
