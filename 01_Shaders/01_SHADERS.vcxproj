@@ -69,7 +69,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\glad.c" />
+    <ClCompile Include="..\Sources\glad.c" />
     <ClCompile Include="colorAttrib.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="tests.cpp" />

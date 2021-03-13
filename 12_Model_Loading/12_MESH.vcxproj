@@ -75,7 +75,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\glad.c" />
+    <ClCompile Include="..\Sources\glad.c" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="main.cpp" />

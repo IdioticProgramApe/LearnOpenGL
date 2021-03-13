@@ -73,7 +73,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\glad.c" />
+    <ClCompile Include="..\Sources\glad.c" />
     <ClCompile Include="coordinates.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
