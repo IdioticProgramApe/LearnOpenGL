@@ -5,9 +5,9 @@
 
 struct Material
 {
-	int diffuse{ 0 };
-	int specular{ 1 };
-	float shininess{ 32.0f };
+	int diffuse     { 0 };
+	int specular    { 1 };
+	float shininess { 32.0f };
 };
 
 namespace Materials

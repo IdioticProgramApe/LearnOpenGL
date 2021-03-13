@@ -9,12 +9,14 @@ class Singleton
 public:
 	static T & getInstance()
 	{
-		static const std::unique_ptr<T> instance{ new T };
+		static const std::shared_ptr<T> instance{ new T };
 		return *instance;
 	}
 
 	Singleton(const Singleton&) = delete;
-	Singleton & operator= (const Singleton) = delete;
+	Singleton & operator= (const Singleton &) = delete;
+	Singleton(Singleton &&) = delete;
+	Singleton & operator= (Singleton &&) = delete;
 
 protected:
 	Singleton() {}

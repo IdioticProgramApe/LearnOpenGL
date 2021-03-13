@@ -19,11 +19,11 @@ enum class CameraMovement
 // default camera values
 namespace CameraDefaultValues
 {
-	constexpr const float YAW{ -90.0f };
-	constexpr const float PITCH{ 0.0f };
-	constexpr const float SPEED{ 2.5f };
-	constexpr const float SENSITIVITY{ 0.1f };
-	constexpr const float ZOOM{ 45.0f };  // for fov
+	constexpr const float YAW         { -90.0f };
+	constexpr const float PITCH       { 0.0f };
+	constexpr const float SPEED       { 2.5f };
+	constexpr const float SENSITIVITY { 0.1f };
+	constexpr const float ZOOM        { 45.0f };  // for fov
 };
 
 class Camera
@@ -33,22 +33,22 @@ private:
 
 private:
 	// camera attributes
-	glm::vec3 m_position{ 0.0f, 0.0f, 0.0f };
-	glm::vec3 m_worldUp{ 0.0f, 1.0f, 0.0f };
+	glm::vec3 m_position { 0.0f, 0.0f, 0.0f };
+	glm::vec3 m_worldUp  { 0.0f, 1.0f, 0.0f };
 	glm::vec3 m_front;
 	glm::vec3 m_up;
 	glm::vec3 m_right;
 
 	// Euler angles
-	float m_yaw = CameraDefaultValues::YAW;
-	float m_pitch =CameraDefaultValues::PITCH;
+	float m_yaw              = CameraDefaultValues::YAW;
+	float m_pitch            = CameraDefaultValues::PITCH;
 
 	// camera options
-	float m_movementSpeed = CameraDefaultValues::SPEED;
+	float m_movementSpeed    = CameraDefaultValues::SPEED;
 	float m_mouseSensitivity = CameraDefaultValues::SENSITIVITY;
-	float m_zoom = CameraDefaultValues::ZOOM;
+	float m_zoom             = CameraDefaultValues::ZOOM;
 
-	bool m_constrainPitch = true;
+	bool m_constrainPitch    = true;
 
 public:
 	// constructor with default values
@@ -83,9 +83,9 @@ public:
 	void setConstrainPitchStatus(bool constrainPitch);
 
 public:
-	const float getZoom() const;
+	const float     getZoom()     const;
 	const glm::vec3 getPosition() const;
-	const glm::vec3 getFront() const;
+	const glm::vec3 getFront()    const;
 
 };
 

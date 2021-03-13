@@ -6,10 +6,10 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std:
 	m_indices = indices;
 	m_textures = textures;
 
-	m_setupMesh();
+	setupMesh();
 }
 
-void Mesh::Draw(Shader shader)
+void Mesh::draw(Shader shader)
 {
 	unsigned int diffuseNb = 1;
 	unsigned int specularNb = 1;
@@ -31,22 +31,22 @@ void Mesh::Draw(Shader shader)
 	glActiveTexture(GL_TEXTURE0); // deactivate textures
 
 	// draw meshes
-	glBindVertexArray(mVAO);
+	glBindVertexArray(m_VAO);
 	glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 
-void Mesh::m_setupMesh()
+void Mesh::setupMesh()
 {
-	glGenBuffers(1, &mVBO);
-	glGenBuffers(1, &mEBO);
-	glGenVertexArrays(1, &mVAO);
+	glGenBuffers(1, &m_VBO);
+	glGenBuffers(1, &m_EBO);
+	glGenVertexArrays(1, &m_VAO);
 
-	glBindVertexArray(mVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBindVertexArray(m_VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned int), &m_indices[0], GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));

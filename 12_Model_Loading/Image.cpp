@@ -10,7 +10,6 @@
 
 TextureFromFile::TextureFromFile(const std::string & name, const std::string & directory, bool vflip/*=false*/)
 {
-
 #if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || __cplusplus >= 201703L)
 	auto filepath = std::filesystem::path();
 	filepath /= directory;

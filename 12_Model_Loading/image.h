@@ -15,8 +15,8 @@ private:
 	int m_width;
 	int m_height;
 	int m_nChannel;
-	int m_wrapParamS = GL_REPEAT;
-	int m_wrapParamT = GL_REPEAT;
+	int m_wrapParamS     = GL_REPEAT;
+	int m_wrapParamT     = GL_REPEAT;
 	int m_filterMagParam = GL_LINEAR;
 	int m_filterMinParam = GL_NEAREST;
 
@@ -28,10 +28,10 @@ public:
 	///
 	virtual ~TextureFromFile() = default;
 
-	unsigned int getTextureID() { return m_id; }
-	int getTextureWidth() { return m_width; }
-	int getTextureHeight() { return m_height; }
-	int getTextureNrChannels() { return m_nChannel; }
+	unsigned int getTextureID()          { return m_id; }
+	int          getTextureWidth()       { return m_width; }
+	int          getTextureHeight()      { return m_height; }
+	int          getTextureNrChannels()  { return m_nChannel; }
 };
 
 #endif // ! IMAGE_H

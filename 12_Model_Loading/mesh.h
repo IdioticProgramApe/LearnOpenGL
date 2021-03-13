@@ -11,6 +11,10 @@
 
 #include "shader.h"
 
+using VertexArrayObj   = unsigned int;
+using VertexBufferObj  = unsigned int;
+using ElementBufferObj = unsigned int;
+
 struct Vertex
 {
 	glm::vec3 position;
@@ -21,25 +25,26 @@ struct Vertex
 struct Texture
 {
 	unsigned int id;
-	std::string type;  // i.e. a diffuse map or a specular map
-	aiString path;
+	std::string  type;  // i.e. a diffuse map or a specular map
+	aiString     path;
 };
 
 class Mesh
 {
 public:
-	unsigned int mVAO;
-	std::vector<Vertex> m_vertices;
+	VertexArrayObj            m_VAO;
+	std::vector<Vertex>       m_vertices;
 	std::vector<unsigned int> m_indices;
-	std::vector<Texture> m_textures;
+	std::vector<Texture>      m_textures;
 
 	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
-	~Mesh() {};
-	void Draw(Shader shader);
+	~Mesh() {}
+	void draw(Shader shader);
 
 private:
-	unsigned int mVBO, mEBO;
-	void m_setupMesh();  // to initialize the buffers
+	VertexBufferObj  m_VBO;
+	ElementBufferObj m_EBO;
+	void setupMesh();  // to initialize the buffers
 };
 
 

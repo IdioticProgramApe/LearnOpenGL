@@ -1,11 +1,14 @@
 #include "model.h"
 
-void Model::Draw(Shader shader)
+void Model::draw(Shader shader)
 {
-	for (auto mesh : m_meshes) mesh.Draw(shader);
+	for (auto & mesh : m_meshes)
+	{
+		mesh.draw(shader);
+	}
 }
 
-void Model::m_loadModel(const char * path)
+void Model::loadModel(const char * path)
 {
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -19,26 +22,26 @@ void Model::m_loadModel(const char * path)
 	std::string stringPath = (std::string)path;
 	m_directory = stringPath.substr(0, stringPath.find_last_of('/'));
 
-	m_processNode(scene->mRootNode, scene);
+	processNode(scene->mRootNode, scene);
 }
 
-void Model::m_processNode(aiNode * node, const aiScene * scene)
+void Model::processNode(aiNode * node, const aiScene * scene)
 {
 	// process parent nodes
 	for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 	{
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-		m_meshes.emplace_back(m_processMesh(mesh, scene));
+		m_meshes.emplace_back(processMesh(mesh, scene));
 	}
 
 	// process children nodes
 	for (unsigned int i = 0; i < node->mNumChildren; ++i)
 	{
-		m_processNode(node->mChildren[i], scene);
+		processNode(node->mChildren[i], scene);
 	}
 }
 
-Mesh Model::m_processMesh(aiMesh * mesh, const aiScene * scene)
+Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene)
 {
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -86,17 +89,17 @@ Mesh Model::m_processMesh(aiMesh * mesh, const aiScene * scene)
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-		std::vector<Texture> diffuseMaps = m_loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-		std::vector<Texture> specularMaps = m_loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
 	return Mesh(vertices, indices, textures);
 }
 
-std::vector<Texture> Model::m_loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::string typeName)
+std::vector<Texture> Model::loadMaterialTextures(aiMaterial * mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); ++i)

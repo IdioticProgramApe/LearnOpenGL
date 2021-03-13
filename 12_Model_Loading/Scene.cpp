@@ -75,8 +75,8 @@ void Callback::cursorPos(GLFWwindow * window, double xPos, double yPos)
 {
 	if (Scene::getInstance().getFirstMove())
 	{
-		Scene::getInstance().getLastX() = xPos;
-		Scene::getInstance().getLastY() = yPos;
+		Scene::getInstance().getLastX()     = xPos;
+		Scene::getInstance().getLastY()     = yPos;
 		Scene::getInstance().getFirstMove() = false;
 	}
 

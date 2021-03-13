@@ -63,8 +63,8 @@ namespace Objects
 		glm::vec3(-1.3f,  1.0f,  -1.5f),
 	};
 
-	//constexpr const char* IRON_MAN = "../src/3d_assets/IronMan/IronMan.obj";
-	constexpr const char* NANO_SUIT = "../src/3d_assets/nanosuit/nanosuit.obj";
+	//constexpr const char* IRON_MAN = "../Resources/3d_assets/IronMan/IronMan.obj";
+	constexpr const char* NANO_SUIT = "../Resources/3d_assets/nanosuit/nanosuit.obj";
 }
 
 #endif // !OBJECTS_H

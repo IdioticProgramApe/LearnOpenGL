@@ -9,8 +9,7 @@
 class ReadFileHandler
 {
 private:
-	std::string m_content;
-	std::ifstream m_buffer;
+	std::ifstream     m_buffer;
 	std::stringstream m_stream;
 
 public:
@@ -19,15 +18,13 @@ public:
 		m_buffer.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 		m_buffer.open(path);
 		m_stream << m_buffer.rdbuf();
-
-		m_content = m_stream.str();
 	}
 
 	virtual ~ReadFileHandler() { m_buffer.close(); }
 
-	std::string getContent() const
+	const std::string & getContent() const
 	{
-		return m_content;
+		return m_stream.str();
 	}
 };
 
@@ -130,43 +127,43 @@ void Shader::setMat4(const char* name, glm::mat4 matrix)
 void Shader::setMaterial(const char* name, Material material)
 {
 	std::string nameString = name;
-	setInt((nameString + (std::string)".diffuse").c_str(), material.diffuse);
-	setInt((nameString + (std::string)".specular").c_str(), material.specular);
-	setFloat((nameString + (std::string)".shininess").c_str(), material.shininess);
+	setInt((nameString + ".diffuse").c_str(), material.diffuse);
+	setInt((nameString + ".specular").c_str(), material.specular);
+	setFloat((nameString + ".shininess").c_str(), material.shininess);
 }
 
 void Shader::setPointLight(const char* name, PointLight pointLight)
 {
 	std::string nameString = name;
-	setVec3((nameString + (std::string)".position").c_str(), pointLight.position);
+	setVec3((nameString + ".position").c_str(), pointLight.position);
 
-	setVec3((nameString + (std::string)".ambient").c_str(), pointLight.ambient);
-	setVec3((nameString + (std::string)".diffuse").c_str(), pointLight.diffuse);
-	setVec3((nameString + (std::string)".specular").c_str(), pointLight.specular);
+	setVec3((nameString + ".ambient").c_str(), pointLight.ambient);
+	setVec3((nameString + ".diffuse").c_str(), pointLight.diffuse);
+	setVec3((nameString + ".specular").c_str(), pointLight.specular);
 
-	setFloat((nameString + (std::string)".constant").c_str(), pointLight.constant);
-	setFloat((nameString + (std::string)".linear").c_str(), pointLight.linear);
-	setFloat((nameString + (std::string)".quadratic").c_str(), pointLight.quadratic);
+	setFloat((nameString + ".constant").c_str(), pointLight.constant);
+	setFloat((nameString + ".linear").c_str(), pointLight.linear);
+	setFloat((nameString + ".quadratic").c_str(), pointLight.quadratic);
 }
 
 void Shader::setDirectLight(const char* name, DirectLight directLight)
 {
 	std::string nameString = name;
-	setVec3((nameString + (std::string)".direction").c_str(), directLight.direction);
-	setVec3((nameString + (std::string)".ambient").c_str(), directLight.ambient);
-	setVec3((nameString + (std::string)".diffuse").c_str(), directLight.diffuse);
-	setVec3((nameString + (std::string)".specular").c_str(), directLight.specular);
+	setVec3((nameString + ".direction").c_str(), directLight.direction);
+	setVec3((nameString + ".ambient").c_str(), directLight.ambient);
+	setVec3((nameString + ".diffuse").c_str(), directLight.diffuse);
+	setVec3((nameString + ".specular").c_str(), directLight.specular);
 }
 
 void Shader::setSpotLight(const char* name, SpotLight spotLight)
 {
 	std::string nameString = name;
-	setVec3((nameString + (std::string)".position").c_str(), spotLight.position);
-	setVec3((nameString + (std::string)".direction").c_str(), spotLight.direction);
-	setFloat((nameString + (std::string)".cutOff").c_str(), glm::cos(glm::radians(spotLight.cutOff)));
-	setFloat((nameString + (std::string)".outerCutOff").c_str(), glm::cos(glm::radians(spotLight.outerCutOff)));
+	setVec3((nameString + ".position").c_str(), spotLight.position);
+	setVec3((nameString + ".direction").c_str(), spotLight.direction);
+	setFloat((nameString + ".cutOff").c_str(), glm::cos(glm::radians(spotLight.cutOff)));
+	setFloat((nameString + ".outerCutOff").c_str(), glm::cos(glm::radians(spotLight.outerCutOff)));
 
-	setVec3((nameString + (std::string)".ambient").c_str(), spotLight.ambient);
-	setVec3((nameString + (std::string)".diffuse").c_str(), spotLight.diffuse);
-	setVec3((nameString + (std::string)".specular").c_str(), spotLight.specular);
+	setVec3((nameString + ".ambient").c_str(), spotLight.ambient);
+	setVec3((nameString + ".diffuse").c_str(), spotLight.diffuse);
+	setVec3((nameString + ".specular").c_str(), spotLight.specular);
 }

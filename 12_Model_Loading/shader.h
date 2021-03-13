@@ -10,8 +10,6 @@
 #include "lights.h"
 
 
-class ReadFileHandler;  // RAII automatically close the buffer
-
 class Shader
 {
 private:

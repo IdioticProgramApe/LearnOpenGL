@@ -65,6 +65,7 @@ void Camera::processKeyboard(CameraMovement direction, float deltaTime)
 		break;
 	case CameraMovement::DOWN:
 		m_position -= velocity * m_worldUp;
+		break;
 	default:
 		break;
 	}
@@ -75,7 +76,7 @@ void Camera::processMouseMovement(float xoffset, float yoffset)
 	xoffset *= m_mouseSensitivity;
 	yoffset *= m_mouseSensitivity;
 
-	m_yaw += xoffset;
+	m_yaw   += xoffset;
 	m_pitch += yoffset;
 
 	if (m_constrainPitch)
