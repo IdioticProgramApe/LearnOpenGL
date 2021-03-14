@@ -1,3 +1,15 @@
+[submodule "External/assimp"]
+	path = External/assimp
+	url = https://github.com/IdioticProgramApe/assimp.git
 [submodule "External/stb"]
 	path = External/stb
-	url = https://github.com/nothings/stb.git
+	url = https://github.com/IdioticProgramApe/stb.git
+[submodule "External/glad"]
+	path = External/glad
+	url = https://github.com/IdioticProgramApe/glad.git
+[submodule "External/glfw"]
+	path = External/glfw
+	url = https://github.com/IdioticProgramApe/glfw.git
+[submodule "External/glm"]
+	path = External/glm
+	url = https://github.com/IdioticProgramApe/glm.git
