@@ -1,8 +1,8 @@
-#include "coordinates.h"
+#include "Textures.h"
 
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 1200
+#define WINDOW_HEIGHT 800
 #define WINDOW_TITLE "COORDINATE SYSTEMS"
 
 #define DIM_MODE 3
@@ -10,8 +10,8 @@
 typedef glm::vec3 VEC3;
 typedef glm::mat4 MAT4;
 
-constexpr const char* VERTEX_SHADER_PATH = "./shaders/shader.vs";
-constexpr const char* FRAGMENT_SHADER_PATH = "./shaders/shader.fs";
+constexpr const char* VERTEX_SHADER_PATH = "./shaders/Vertex.glsl";
+constexpr const char* FRAGMENT_SHADER_PATH = "./shaders/Fragment.glsl";
 
 
 void framebufferSizeCallback(GLFWwindow* window, GLsizei width, GLsizei height);
@@ -249,19 +249,27 @@ int main()
 		for (int i = 0; i < 10; ++i)
 		{
 			MAT4 model(1.0f), view(1.0f), projection(1.0f);
-			model = glm::translate(model, cubePositions[i]);
-			if (i % 3 == 0)
 			{
-				model = glm::rotate(model, glm::radians(20.0f * i), VEC3(1.0f, 0.3f, 0.5f));
+				model = glm::translate(model, cubePositions[i]);
+				if (i % 3 == 0)
+				{
+					model = glm::rotate(model, glm::radians(20.0f * i), VEC3(1.0f, 0.3f, 0.5f));
+				}
+				else
+				{
+					model = glm::rotate(model, (float)glfwGetTime() * glm::radians(20.0f * i), VEC3(1.0f, 0.3f, 0.5f));
+				}
+				model = glm::scale(model, glm::vec3(0.5f));
 			}
-			else
+			
 			{
-				model = glm::rotate(model, (float)glfwGetTime() * glm::radians(20.0f * i), VEC3(1.0f, 0.3f, 0.5f));
+				view = glm::translate(view, VEC3(0.0f, 0.0f, -3.0f));
+				// view = glm::translate(view, VEC3(sin((float)glfwGetTime()) * 3, 0.0f, cos((float)glfwGetTime()) * 5));
 			}
-			view = glm::translate(view, VEC3(0.0f, 0.0f, -3.0f));
-			// view = glm::translate(view, VEC3(sin((float)glfwGetTime()) * 3, 0.0f, cos((float)glfwGetTime()) * 5));
-			projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
-
+			
+			{
+				projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 100.0f);
+			}
 
 			shader.setMat4("model", model);
 			shader.setMat4("view", view);

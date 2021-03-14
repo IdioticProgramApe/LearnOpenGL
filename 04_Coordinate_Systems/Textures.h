@@ -14,8 +14,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <../External/stb/stb_image.h>
 
-constexpr const char* TEX_CONTAINER = "../src/textures/container.jpg";
-constexpr const char* TEX_WALL = "../src/textures/wall.jpg";
-constexpr const char* TEX_BORDERLANDS = "../src/textures/borderlands3.bmp";
+constexpr const char* TEX_CONTAINER = "../Resources/textures/container.jpg";
+constexpr const char* TEX_WALL = "../Resources/textures/wall.jpg";
+constexpr const char* TEX_BORDERLANDS = "../Resources/textures/borderlands3.bmp";
 
 #endif // !COORDINATES_H
