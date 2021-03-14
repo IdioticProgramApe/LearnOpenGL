@@ -22,7 +22,7 @@ public:
 
 	virtual ~ReadFileHandler() { m_buffer.close(); }
 
-	const std::string & getContent() const
+	std::string getContent() const
 	{
 		return m_stream.str();
 	}

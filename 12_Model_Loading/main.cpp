@@ -67,8 +67,8 @@ int main()
 		projection = glm::perspective(glm::radians(Scene::getInstance().getCamera().getZoom()),
 			(float)WindowParams::WIDTH / WindowParams::HEIGHT, 0.1f, 100.0f);
 		glm::mat4 objectModel = model;
-		objectModel = glm::translate(objectModel, glm::vec3(0.0f));
-		objectModel = glm::scale(objectModel, glm::vec3(1.0f));
+		objectModel = glm::translate(objectModel, glm::vec3(0.0f, -5.0f, -15.0f));
+		objectModel = glm::scale(objectModel, glm::vec3(0.5f));
 
 		objectShader.use();
 		objectShader.setDirectLight("directLight", Lights::defaultDirectLight);
@@ -76,12 +76,15 @@ int main()
 		SpotLight spotLight{ Scene::getInstance().getCamera().getPosition(), Scene::getInstance().getCamera().getFront() };
 		objectShader.setSpotLight("spotLight", spotLight);
 
+		// in Fragment shader
 		objectShader.setVec3("viewPos", Scene::getInstance().getCamera().getPosition());
+
+		// in vertex shader
 		objectShader.setMat4("model", objectModel);  // this model matrix is uniform matrix (no need for normal matrix)
 		objectShader.setMat4("view", Scene::getInstance().getCamera().getViewMatrix());
 		objectShader.setMat4("projection", projection);
 
-		asset.Draw(objectShader);
+		asset.draw(objectShader);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);

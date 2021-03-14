@@ -14,7 +14,7 @@ namespace WindowParams
 	constexpr auto HEIGHT = 1080;
 	constexpr auto TITLE  = "12_MESH";
 
-	constexpr auto COLOR  = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	constexpr auto COLOR  = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);
 }
 
 class Scene : public Singleton<Scene>
