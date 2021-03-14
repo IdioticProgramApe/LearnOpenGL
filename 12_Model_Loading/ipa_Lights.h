@@ -1,7 +1,7 @@
 #ifndef LIGHTS_H
 #define LIGHTS_H
 
-#include <glm/glm.hpp>
+#include <glm.hpp>
 
 
 struct PointLight

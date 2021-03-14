@@ -1,12 +1,12 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
+#include "glad/glad.h"
+#include "glfw3.h"
+#include "glm.hpp"
 
-#include "Camera.h"
-#include "Singleton.h"
+#include "ipa_Camera.h"
+#include "ipa_Singleton.h"
 
 namespace WindowParams
 {

@@ -2,14 +2,14 @@
 #define MESH_H
 
 
-#include <glm/glm.hpp>
+#include <glm.hpp>
 
 #include <string>
 #include <sstream>
 #include <vector>
-#include <assimp/mesh.h>
+#include "assimp/mesh.h"
 
-#include "shader.h"
+#include "ipa_Shader.h"
 
 using VertexArrayObj   = unsigned int;
 using VertexBufferObj  = unsigned int;

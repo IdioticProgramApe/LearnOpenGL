@@ -1,7 +1,7 @@
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
-#include <glm/glm.hpp>
+#include <glm.hpp>
 
 namespace Objects
 {
@@ -63,8 +63,8 @@ namespace Objects
 		glm::vec3(-1.3f,  1.0f,  -1.5f),
 	};
 
-	//constexpr const char* IRON_MAN = "../Resources/3d_assets/IronMan/IronMan.obj";
-	constexpr const char* NANO_SUIT = "../Resources/3d_assets/nanosuit/nanosuit.obj";
+	//constexpr const char* IRON_MAN = "../Data/Assets/IronMan/IronMan.obj";
+	constexpr const char* NANO_SUIT = "../Data/Assets/nanosuit/nanosuit.obj";
 }
 
 #endif // !OBJECTS_H

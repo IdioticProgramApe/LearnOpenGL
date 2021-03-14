@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "ipa_Camera.h"
 
 
 void Camera::updateCameraVectors()

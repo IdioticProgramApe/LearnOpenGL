@@ -1,9 +1,9 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "glad/glad.h"
+#include "glm.hpp"
+#include "gtc/matrix_transform.hpp"
 
 // define several possible options for camera movement
 enum class CameraMovement

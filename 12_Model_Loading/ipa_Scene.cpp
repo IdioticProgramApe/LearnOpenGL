@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "Scene.h"
+#include "ipa_Scene.h"
 
 
 void Scene::processInput(GLFWwindow * window)

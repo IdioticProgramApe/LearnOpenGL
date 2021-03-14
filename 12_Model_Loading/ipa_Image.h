@@ -2,8 +2,8 @@
 #define IMAGE_H
 
 #include <string>
-#include <glad/glad.h>
-#include <stb/stb_image.h>  // need to be in header, to prevent linkage problems
+#include "glad/glad.h"
+#include "stb_image.h"  // need to be in header, to prevent linkage problems
 
 
 class TextureFromFile

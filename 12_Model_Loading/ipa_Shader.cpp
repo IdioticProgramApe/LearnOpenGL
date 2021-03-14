@@ -1,9 +1,12 @@
-#include "shader.h"
+#include "ipa_Shader.h"
 
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 
 class ReadFileHandler

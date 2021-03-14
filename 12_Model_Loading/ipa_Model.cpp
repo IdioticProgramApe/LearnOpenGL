@@ -1,4 +1,4 @@
-#include "model.h"
+#include "ipa_Model.h"
 
 void Model::draw(Shader shader)
 {

@@ -38,11 +38,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="debugOpenGL.props" />
+    <Import Project="OpenGL_DBG.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="releaseOpenGL.props" />
+    <Import Project="OpenGL_RLS.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -54,7 +54,8 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <PostBuildEvent>
-      <Command />
+      <Command>xcopy $(SolutionDir)External\assimp\bin\$(Configuration)\assimpd.exe $(OutDir) /y
+xcopy $(SolutionDir)External\assimp\bin\$(Configuration)\assimp-vc141-mtd.dll $(OutDir) /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -71,30 +72,31 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command />
+      <Command>xcopy $(SolutionDir)External\assimp\bin\$(Configuration)\assimp.exe $(OutDir) /y
+xcopy $(SolutionDir)External\assimp\bin\$(Configuration)\assimp-vc141-mt.dll $(OutDir) /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Sources\glad.c" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="..\External\glad\glad.c" />
+    <ClCompile Include="ipa_Camera.cpp" />
+    <ClCompile Include="ipa_Image.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="model.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ipa_Mesh.cpp" />
+    <ClCompile Include="ipa_Model.cpp" />
+    <ClCompile Include="ipa_Scene.cpp" />
+    <ClCompile Include="ipa_Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Image.h" />
-    <ClInclude Include="lights.h" />
-    <ClInclude Include="materials.h" />
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="model.h" />
-    <ClInclude Include="objects.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="ipa_Camera.h" />
+    <ClInclude Include="ipa_Image.h" />
+    <ClInclude Include="ipa_Lights.h" />
+    <ClInclude Include="ipa_Materials.h" />
+    <ClInclude Include="ipa_Mesh.h" />
+    <ClInclude Include="ipa_Model.h" />
+    <ClInclude Include="ipa_Objects.h" />
+    <ClInclude Include="ipa_Scene.h" />
+    <ClInclude Include="ipa_Shader.h" />
+    <ClInclude Include="ipa_Singleton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Fragment.glsl" />

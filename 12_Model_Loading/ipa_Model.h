@@ -1,18 +1,18 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <glm/glm.hpp>
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
+#include "glm.hpp"
 
 #include <string>
 #include <iostream>
 #include <vector>
 
-#include "shader.h"
-#include "mesh.h"
-#include "image.h"
+#include "ipa_Shader.h"
+#include "ipa_Mesh.h"
+#include "ipa_Image.h"
 
 class Model
 {
