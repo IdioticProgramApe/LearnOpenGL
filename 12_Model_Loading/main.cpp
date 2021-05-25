@@ -1,12 +1,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 
-#include "Scene.h"
-#include "shader.h"
-#include "objects.h"
-#include "materials.h"
-#include "lights.h"
-#include "mesh.h"
-#include "model.h"
+#include "ipa_Scene.h"
+#include "ipa_Shader.h"
+#include "ipa_Objects.h"
+#include "ipa_Materials.h"
+#include "ipa_Lights.h"
+#include "ipa_Mesh.h"
+#include "ipa_Model.h"
 
 
 int main()
