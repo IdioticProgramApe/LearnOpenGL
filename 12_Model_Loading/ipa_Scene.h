@@ -10,8 +10,8 @@
 
 namespace WindowParams
 {
-	constexpr auto WIDTH  = 1920;
-	constexpr auto HEIGHT = 1080;
+	constexpr auto WIDTH  = 800;
+	constexpr auto HEIGHT = 600;
 	constexpr auto TITLE  = "12_MESH";
 
 	constexpr auto COLOR  = glm::vec4(0.5f, 0.5f, 0.5f, 1.0f);

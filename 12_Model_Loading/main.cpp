@@ -23,7 +23,6 @@ int main()
 		std::cout << "ERROR::WINDOW::CREATION" << std::endl;
 		glfwTerminate();
 		return -1;
-
 	}
 	glfwMakeContextCurrent(window);
 
